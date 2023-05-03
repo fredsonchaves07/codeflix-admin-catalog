@@ -2,17 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>codeflix-admin-catalog</artifactId>
+        <groupId>com.fredsonchaves</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fredsonchaves</groupId>
-    <artifactId>codeflix-admin-catalog</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>domain</module>
-        <module>application</module>
-        <module>infrastructure</module>
-    </modules>
+    <groupId>com.fredsonchaves.application</groupId>
+    <artifactId>application</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -22,10 +20,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
+            <groupId>com.fredsonchaves.domain</groupId>
+            <artifactId>domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
