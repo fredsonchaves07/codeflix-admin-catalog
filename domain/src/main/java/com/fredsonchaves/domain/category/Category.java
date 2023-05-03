@@ -1,10 +1,11 @@
 package com.fredsonchaves.domain.category;
 
 import com.fredsonchaves.domain.AggregateRoot;
+import com.fredsonchaves.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
-public class Category extends AggregateRoot<CategoryID> {
+public class Category extends AggregateRoot<CategoryID>  {
 
     private String name;
 
@@ -45,6 +46,11 @@ public class Category extends AggregateRoot<CategoryID> {
 
     public CategoryID getId() {
         return id;
+    }
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
     public String getName() {
