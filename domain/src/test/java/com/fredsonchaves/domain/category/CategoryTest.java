@@ -2,11 +2,11 @@ package com.fredsonchaves.domain.category;
 
 import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.validation.handler.ThrowsValidationHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CategoryTest {
 
