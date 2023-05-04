@@ -41,7 +41,8 @@ public class Category extends AggregateRoot<CategoryID>  {
         CategoryID id = CategoryID.unique();
         Instant createdAt = Instant.now();
         Instant updatedAt = Instant.now();
-        return new Category(id, name, description, isActive, createdAt, updatedAt, null);
+        Instant deletedAt = isActive ? null : Instant.now();
+        return new Category(id, name, description, isActive, createdAt, updatedAt, deletedAt);
     }
 
     public CategoryID getId() {
@@ -51,6 +52,32 @@ public class Category extends AggregateRoot<CategoryID>  {
     @Override
     public void validate(final ValidationHandler handler) {
         new CategoryValidator(this, handler).validate();
+    }
+
+    public Category deactivate() {
+        if (getDeletedAt() == null)
+            deletedAt = Instant.now();
+        active = false;
+        updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category activate() {
+        deletedAt = null;
+        active = true;
+        updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category update(final String name, final String description, final boolean isActive) {
+        if (isActive)
+            activate();
+        else
+            deactivate();
+        this.name = name;
+        this.description = description;
+        updatedAt = Instant.now();
+        return this;
     }
 
     public String getName() {

@@ -23,7 +23,7 @@ public class ThrowsValidationHandler implements ValidationHandler {
         try {
             validation.validate();
         } catch (Exception exception) {
-            throw DomainException.with(List.of(new Error(exception.getMessage())));
+            throw DomainException.with(new Error(exception.getMessage()));
         }
         return this;
     }
