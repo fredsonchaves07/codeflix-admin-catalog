@@ -2,7 +2,6 @@ package com.fredsonchaves.application.category.create;
 
 
 import com.fredsonchaves.domain.category.CategoryGateway;
-import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
