@@ -1,14 +1,9 @@
 package com.fredsonchaves.application;
 
-import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.Assert.assertNotNull;
-
+@ExtendWith(MockitoExtension.class)
 public class UseCaseTest {
 
-    @Test
-    public void testCreateUseCase() {
-        assertNotNull(new UseCase());
-        assertNotNull(new UseCase().execute());
-    }
 }

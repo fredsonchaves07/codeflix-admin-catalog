@@ -1,8 +1,6 @@
 package com.fredsonchaves.application;
 
-public class UseCase {
+public interface UseCase<IN, OUT> {
 
-    public Category execute() {
-        return new Category();
-    }
+    OUT execute(IN in);
 }
