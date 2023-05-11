@@ -3,10 +3,12 @@ package com.fredsonchaves.application.category.create;
 
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.validation.handler.Notification;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Objects;
@@ -25,6 +27,12 @@ public class CreateCategoryUseCaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @BeforeEach
+    public void cleanUp() {
+        Mockito.reset(categoryGateway);
+    }
+
 
     @Test
     public void givenAValidCommand_whenCalsCreateCategory_shouldReturnCategoryId() {

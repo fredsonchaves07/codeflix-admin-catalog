@@ -1,6 +1,6 @@
 package com.fredsonchaves.application;
 
-public abstract class UnitUseCase<IN> {
+public interface UnitUseCase<IN> {
 
-    public abstract void execute(IN in);
+    void execute(IN in);
 }

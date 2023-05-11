@@ -6,6 +6,7 @@ import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.validation.handler.Notification;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,11 @@ public class UpdateCategoryUseCaseTest {
 
     @Mock
     private CategoryGateway gateway;
+
+    @BeforeEach
+    public void cleanUp() {
+        Mockito.reset(gateway);
+    }
 
     @Test
     public void givenAValidCommand_whenCalsUpdateCategory_shouldReturnCategoryId() {
