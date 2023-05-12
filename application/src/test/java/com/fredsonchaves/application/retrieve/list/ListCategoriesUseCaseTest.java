@@ -17,8 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -99,7 +98,6 @@ public class ListCategoriesUseCaseTest {
         CategorySearchQuery query = new CategorySearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
-        final int expectedItemsCount = 2;
         when(gateway.findAll(eq(query))).thenThrow(new IllegalStateException(expectedErrorMessage));
         final IllegalStateException actualException = assertThrows(
                 IllegalStateException.class,
