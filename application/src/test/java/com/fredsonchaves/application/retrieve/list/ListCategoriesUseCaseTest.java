@@ -1,6 +1,8 @@
 package com.fredsonchaves.application.retrieve.list;
 
 import com.fredsonchaves.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
+import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
+import com.fredsonchaves.application.category.retrieve.list.DefaultListCategoriesUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategorySearchQuery;
@@ -15,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -49,23 +53,58 @@ public class ListCategoriesUseCaseTest {
         );
         Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
         final int expectedItemsCount = 2;
-        final List<Category> expectedResults = expectedPagination.map(CategoryListOutput::from);
+        final Pagination<CategoryListOutput> expectedResults = expectedPagination.map(CategoryListOutput::from);
         when(gateway.findAll(eq(query))).thenReturn(expectedPagination);
         final var actualResult = useCase.execute(query);
         assertEquals(expectedItemsCount, actualResult.items().size());
-        assertEquals(expectedResults, actualResult.expectedResult());
-        assertEquals(expectedPage, actualResult.page());
+        assertEquals(expectedResults, actualResult);
+        assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
         assertEquals(categories.size(), actualResult.total());
     }
 
     @Test
     public void givenAValidQuery_whenHasNoResults_thenShouldReturnEmptyCategoriesList() {
+        List<Category> categories = List.of();
+        final int expectedPage = 0;
+        final int expectedPerPage = 0;
+        final String expectedTerms = "";
+        final String expectedSort = "createdAt";
+        final String expectedDirection = "asc";
 
+        CategorySearchQuery query = new CategorySearchQuery(
+                expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
+        );
+        Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, 0, categories);
+        final int expectedItemsCount = 0;
+        final Pagination<CategoryListOutput> expectedResults = expectedPagination.map(CategoryListOutput::from);
+        when(gateway.findAll(eq(query))).thenReturn(expectedPagination);
+        final var actualResult = useCase.execute(query);
+        assertEquals(expectedItemsCount, actualResult.items().size());
+        assertEquals(expectedResults, actualResult);
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(0, actualResult.total());
     }
 
     @Test
     public void givenAValidQuery_whenGatewayThrowsException_shouldReturnException() {
+        final int expectedPage = 0;
+        final int expectedPerPage = 0;
+        final String expectedTerms = "";
+        final String expectedSort = "createdAt";
+        final String expectedDirection = "asc";
+        final String expectedErrorMessage = "Gateway error";
 
+        CategorySearchQuery query = new CategorySearchQuery(
+                expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
+        );
+        final int expectedItemsCount = 2;
+        when(gateway.findAll(eq(query))).thenThrow(new IllegalStateException(expectedErrorMessage));
+        final IllegalStateException actualException = assertThrows(
+                IllegalStateException.class,
+                () -> useCase.execute(query)
+        );
+        assertEquals(expectedErrorMessage, actualException.getMessage());
     }
 }
