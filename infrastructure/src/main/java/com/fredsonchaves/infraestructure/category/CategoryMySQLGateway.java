@@ -5,14 +5,14 @@ import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.category.CategorySearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
+import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Service
+@Component
 public class CategoryMySQLGateway implements CategoryGateway {
-
 
     private final CategoryRepository repository;
 
@@ -22,7 +22,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public Category create(Category category) {
-        return null;
+        return repository.save(CategoryJpaEntity.from(category)).toAggregate();
     }
 
     @Override

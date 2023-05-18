@@ -4,8 +4,9 @@ import com.fredsonchaves.domain.AggregateRoot;
 import com.fredsonchaves.domain.validation.ValidationHandler;
 
 import java.time.Instant;
+import java.util.Objects;
 
-public class Category extends AggregateRoot<CategoryID>  implements Cloneable{
+public class Category extends AggregateRoot<CategoryID>  implements Cloneable {
 
     private String name;
 
@@ -32,8 +33,8 @@ public class Category extends AggregateRoot<CategoryID>  implements Cloneable{
         this.name = name;
         this.description = description;
         this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Objects.requireNonNull(createdAt, "'createdAt' should not be null");
+        this.updatedAt = Objects.requireNonNull(updatedAt, "'updatedAt' should not be null");
         this.deletedAt = deletedAt;
     }
 
@@ -54,18 +55,14 @@ public class Category extends AggregateRoot<CategoryID>  implements Cloneable{
             final Instant updatedAt,
             final Instant deletedAt
     ) {
-        return new Category(id, name, description, active, createdAt, updatedAt, deletedAt);
-    }
-
-    public static Category newCategory(final Category category) {
-        return newCategory(
-                category.getId(),
-                category.getName(),
-                category.getDescription(),
-                category.isActive(),
-                category.getCreatedAt(),
-                category.getUpdatedAt(),
-                category.getDeletedAt()
+        return new Category(
+                id,
+                name,
+                description,
+                active,
+                createdAt,
+                updatedAt,
+                deletedAt
         );
     }
 

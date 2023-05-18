@@ -31,7 +31,7 @@ public class CategoryJpaEntity {
     @Column(nullable = false, columnDefinition = "DATETIME(6)")
     private Instant updatedAt;
 
-    @Column(nullable = false, columnDefinition = "DATETIME(6)")
+    @Column(columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
     @Deprecated
