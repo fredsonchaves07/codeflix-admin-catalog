@@ -3,7 +3,6 @@ package com.fredsonchaves.application.category.create;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.validation.handler.Notification;
-import com.fredsonchaves.domain.validation.handler.ThrowsValidationHandler;
 import io.vavr.API;
 import io.vavr.control.Either;
 
