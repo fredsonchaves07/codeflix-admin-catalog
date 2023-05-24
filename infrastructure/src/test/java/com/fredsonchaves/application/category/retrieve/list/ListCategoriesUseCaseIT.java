@@ -2,7 +2,6 @@ package com.fredsonchaves.application.category.retrieve.list;
 
 import com.fredsonchaves.IntegrationTest;
 import com.fredsonchaves.domain.category.Category;
-import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategorySearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.List;
 import java.util.stream.Stream;
