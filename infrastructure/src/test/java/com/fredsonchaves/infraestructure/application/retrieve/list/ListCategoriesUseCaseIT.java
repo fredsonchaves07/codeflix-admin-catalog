@@ -1,6 +1,8 @@
-package com.fredsonchaves.application.category.retrieve.list;
+package com.fredsonchaves.infraestructure.application.retrieve.list;
 
 import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
+import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategorySearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;

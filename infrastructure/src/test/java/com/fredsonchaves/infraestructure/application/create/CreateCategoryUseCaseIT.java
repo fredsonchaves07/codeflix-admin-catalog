@@ -1,23 +1,20 @@
-package com.fredsonchaves.application.category.create;
+package com.fredsonchaves.infraestructure.application.create;
 
 import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.application.category.create.CreateCategoryInput;
+import com.fredsonchaves.application.category.create.CreateCategoryOutput;
+import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 
 @IntegrationTest
 public class CreateCategoryUseCaseIT {

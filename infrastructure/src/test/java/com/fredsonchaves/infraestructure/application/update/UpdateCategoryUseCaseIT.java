@@ -1,6 +1,9 @@
-package com.fredsonchaves.application.category.update;
+package com.fredsonchaves.infraestructure.application.update;
 
 import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.application.category.update.UpdateCategoryInput;
+import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
+import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;

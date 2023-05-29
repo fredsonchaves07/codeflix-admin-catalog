@@ -1,13 +1,9 @@
 package com.fredsonchaves.infraestructure.category.persistence;
 
-import com.fredsonchaves.MySQLGatewayTest;
 import com.fredsonchaves.domain.category.Category;
-import com.fredsonchaves.domain.category.CategoryGateway;
-import com.fredsonchaves.infraestructure.category.CategoryMySQLGateway;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
