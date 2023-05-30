@@ -1,6 +1,7 @@
 package com.fredsonchaves.infraestructure.api;
 
 import com.fredsonchaves.domain.pagination.Pagination;
+import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RequestMapping(value = "categories")
+@RequestMapping(value = "/categories")
 @Tag(name = "Categories")
+@RestController
 public interface CategoryAPI {
 
     @PostMapping(
@@ -42,4 +44,13 @@ public interface CategoryAPI {
             @RequestParam(name = "sort", required = false, defaultValue = "name") final String sort,
             @RequestParam(name = "dir", required = false, defaultValue = "asc") final String direction
     );
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get a category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NotFound"),
+            @ApiResponse(responseCode = "500", description = "An internal server error"),
+    })
+    CategoryApiOutput getById(@PathVariable(value = "id") String id);
 }

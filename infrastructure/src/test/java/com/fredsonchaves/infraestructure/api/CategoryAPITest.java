@@ -1,35 +1,29 @@
 package com.fredsonchaves.infraestructure.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fredsonchaves.ControllerTest;
-import com.fredsonchaves.IntegrationTest;
-import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
+import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
+import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
+import com.fredsonchaves.application.category.retrieve.get.GetCategoryByIdUseCase;
+import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
+import com.fredsonchaves.domain.category.Category;
+import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
-import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
-import io.vavr.API;
-import io.vavr.control.Either;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 import static io.vavr.API.Left;
 import static io.vavr.API.Right;
@@ -37,6 +31,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -51,7 +46,16 @@ public class CategoryAPITest {
     private ObjectMapper mapper;
 
     @MockBean
-    private CreateCategoryUseCase useCase;
+    private CreateCategoryUseCase createCategoryUseCase;
+
+    @MockBean
+    private GetCategoryByIdUseCase getCategoryByIdUseCase;
+
+    @MockBean
+    private ListCategoriesUseCase listCategoriesUseCase;
+
+    @MockBean
+    private DeleteCategoryUseCase deleteCategoryUseCase;
 
     @Test
     public void givenAValidCommand_whenCalsCreateCategory_shouldReturnCategoryId() throws Exception {
@@ -61,7 +65,7 @@ public class CategoryAPITest {
         final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
                 expectedName, expectedDescription, expectedIsActive
         );
-        when(useCase.execute(any())).thenReturn(Right(CreateCategoryOutput.from("123")));
+        when(createCategoryUseCase.execute(any())).thenReturn(Right(CreateCategoryOutput.from("123")));
         MockHttpServletRequestBuilder request = post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(createCategoryInput));
@@ -71,7 +75,7 @@ public class CategoryAPITest {
                         status().isCreated(),
                         header().string("Location", "/categories/123")
                 );
-        verify(useCase, times(1)).execute(argThat(output ->
+        verify(createCategoryUseCase, times(1)).execute(argThat(output ->
                 Objects.equals(expectedName, output.name())
                 && Objects.equals(expectedDescription, output.description())
                 && Objects.equals(expectedIsActive, output.isActive())
@@ -86,7 +90,7 @@ public class CategoryAPITest {
         final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
                 expectedName, expectedDescription, expectedIsActive
         );
-        when(useCase.execute(any())).thenReturn(Left(Notification.create(new Error("'name' should not be null"))));
+        when(createCategoryUseCase.execute(any())).thenReturn(Left(Notification.create(new Error("'name' should not be null"))));
         MockHttpServletRequestBuilder request = post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(createCategoryInput));
@@ -98,7 +102,7 @@ public class CategoryAPITest {
                         jsonPath("$.errors", hasSize(1)),
                         jsonPath("$.errors[0].message", equalTo("'name' should not be null"))
                 );
-        verify(useCase, times(1)).execute(argThat(output ->
+        verify(createCategoryUseCase, times(1)).execute(argThat(output ->
                 Objects.equals(expectedName, output.name())
                         && Objects.equals(expectedDescription, output.description())
                         && Objects.equals(expectedIsActive, output.isActive())
@@ -113,7 +117,7 @@ public class CategoryAPITest {
         final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
                 expectedName, expectedDescription, expectedIsActive
         );
-        when(useCase.execute(any())).thenThrow(DomainException.with(new Error("'name' should not be null")));
+        when(createCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error("'name' should not be null")));
         MockHttpServletRequestBuilder request = post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(createCategoryInput));
@@ -125,10 +129,57 @@ public class CategoryAPITest {
                         jsonPath("$.errors", hasSize(1)),
                         jsonPath("$.errors[0].message", equalTo("'name' should not be null"))
                 );
-        verify(useCase, times(1)).execute(argThat(output ->
+        verify(createCategoryUseCase, times(1)).execute(argThat(output ->
                 Objects.equals(expectedName, output.name())
                         && Objects.equals(expectedDescription, output.description())
                         && Objects.equals(expectedIsActive, output.isActive())
         ));
+    }
+
+    @Test
+    public void givenAValidId_whenCallsGetCategory_shouldReturnCategory() throws Exception {
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+        Category category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        CategoryID expectedId = category.getId();
+        when(getCategoryByIdUseCase.execute(expectedId)).thenReturn(CategoryOutput.from(category));
+        MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId.getValue());
+        mvc.perform(request).andDo(print()).andExpectAll(
+                status().isOk(),
+                jsonPath("$.id", equalTo(expectedId)),
+                jsonPath("$.name", equalTo(expectedName)),
+                jsonPath("$.description", equalTo(expectedDescription)),
+                jsonPath("$.is_active", equalTo(expectedIsActive))
+        );
+    }
+
+    @Test
+    public void givenAInvalidId_whenCallsGetCategory_shouldBeReturnNotFound() throws Exception{
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        final String expectedErrorMessage = "Category with id %s was not found".formatted(expectedId.getValue());
+        MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId);
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                        status().isNotFound(),
+                        jsonPath("$.errors", hasSize(1)),
+                        jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)
+                ));
+    }
+
+    @Test
+    public void givenAValidId_whenGatewayThrowsError_shouldReturnException() throws Exception {
+        final String expectedErrorMessage = "Gateway error";
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        when(createCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error(expectedErrorMessage)));
+        MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId);
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                        status().isUnprocessableEntity(),
+                        jsonPath("$.errors", hasSize(1)),
+                        jsonPath("$.errors[0].message", equalTo(expectedErrorMessage))
+                );
     }
 }
