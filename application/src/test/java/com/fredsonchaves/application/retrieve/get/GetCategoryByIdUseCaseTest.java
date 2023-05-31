@@ -6,6 +6,7 @@ import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
+import com.fredsonchaves.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,10 +60,10 @@ public class GetCategoryByIdUseCaseTest {
     @Test
     public void givenAInvalidId_whenCallsGetCategory_shouldBeReturnNotFound() {
         CategoryID expectedId = CategoryID.from(UUID.randomUUID());
-        final String expectedErrorMessage = "Category with id %s was not found".formatted(expectedId.getValue());
+        final String expectedErrorMessage = "Category with ID %s was not found".formatted(expectedId.getValue());
         when(gateway.findById(expectedId)).thenReturn(Optional.empty());
-        final DomainException actualException = assertThrows(
-                DomainException.class,
+        final NotFoundException actualException = assertThrows(
+                NotFoundException.class,
                 () -> useCase.execute(expectedId)
         );
         assertEquals(expectedErrorMessage, actualException.getMessage());

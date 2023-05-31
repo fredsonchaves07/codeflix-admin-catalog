@@ -5,6 +5,7 @@ import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
+import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import io.vavr.API;
@@ -27,9 +28,7 @@ public class DefaultGetCategoryByIdUseCase implements GetCategoryByIdUseCase {
         return gateway.findById(categoryID).map(CategoryOutput::from).orElseThrow(notFound(categoryID));
     }
 
-    private Supplier<DomainException> notFound(final CategoryID categoryID) {
-        return () -> DomainException.with(
-                new Error("Category with id %s was not found".formatted(categoryID.getValue()))
-        );
+    private Supplier<NotFoundException> notFound(final CategoryID categoryID) {
+        return () -> NotFoundException.with(Category.class, categoryID);
     }
 }

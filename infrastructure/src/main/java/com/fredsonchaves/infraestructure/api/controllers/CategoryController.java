@@ -12,12 +12,13 @@ import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
 import com.fredsonchaves.infraestructure.category.presenters.CategoryApiPresenter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.Objects;
 import java.util.function.Function;
 
-
+@RestController
 public class CategoryController implements CategoryAPI {
 
     private final CreateCategoryUseCase createCategoryUseCase;

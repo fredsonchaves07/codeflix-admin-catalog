@@ -15,7 +15,6 @@ import javax.validation.Valid;
 
 @RequestMapping(value = "/categories")
 @Tag(name = "Categories")
-@RestController
 public interface CategoryAPI {
 
     @PostMapping(

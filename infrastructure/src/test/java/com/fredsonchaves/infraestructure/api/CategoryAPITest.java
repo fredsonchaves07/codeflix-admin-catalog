@@ -11,6 +11,7 @@ import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCas
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
+import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
@@ -147,7 +148,7 @@ public class CategoryAPITest {
         MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId.getValue());
         mvc.perform(request).andDo(print()).andExpectAll(
                 status().isOk(),
-                jsonPath("$.id", equalTo(expectedId)),
+                jsonPath("$.id", equalTo(expectedId.getValue())),
                 jsonPath("$.name", equalTo(expectedName)),
                 jsonPath("$.description", equalTo(expectedDescription)),
                 jsonPath("$.is_active", equalTo(expectedIsActive))
@@ -157,14 +158,14 @@ public class CategoryAPITest {
     @Test
     public void givenAInvalidId_whenCallsGetCategory_shouldBeReturnNotFound() throws Exception{
         CategoryID expectedId = CategoryID.from(UUID.randomUUID());
-        final String expectedErrorMessage = "Category with id %s was not found".formatted(expectedId.getValue());
+        final String expectedErrorMessage = "%s with ID %s was not found".formatted(Category.class.getSimpleName(), expectedId.getValue());
+        when(getCategoryByIdUseCase.execute(any())).thenThrow(NotFoundException.with(Category.class, expectedId));
         MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId);
         mvc.perform(request)
                 .andDo(print())
                 .andExpectAll(
                         status().isNotFound(),
-                        jsonPath("$.errors", hasSize(1)),
-                        jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)
+                        jsonPath("$.message", equalTo(expectedErrorMessage)
                 ));
     }
 
@@ -172,7 +173,7 @@ public class CategoryAPITest {
     public void givenAValidId_whenGatewayThrowsError_shouldReturnException() throws Exception {
         final String expectedErrorMessage = "Gateway error";
         CategoryID expectedId = CategoryID.from(UUID.randomUUID());
-        when(createCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error(expectedErrorMessage)));
+        when(getCategoryByIdUseCase.execute(any())).thenThrow(DomainException.with(new Error(expectedErrorMessage)));
         MockHttpServletRequestBuilder request = get("/categories/{id}", expectedId);
         mvc.perform(request)
                 .andDo(print())
