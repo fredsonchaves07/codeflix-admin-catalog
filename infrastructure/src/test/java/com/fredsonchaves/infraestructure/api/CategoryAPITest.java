@@ -8,6 +8,8 @@ import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
 import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
 import com.fredsonchaves.application.category.retrieve.get.GetCategoryByIdUseCase;
 import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
+import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
+import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
@@ -15,7 +17,10 @@ import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
+import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
+import io.vavr.API;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -32,8 +37,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -54,6 +58,9 @@ public class CategoryAPITest {
 
     @MockBean
     private ListCategoriesUseCase listCategoriesUseCase;
+
+    @MockBean
+    private UpdateCategoryUseCase updateCategoryUseCase;
 
     @MockBean
     private DeleteCategoryUseCase deleteCategoryUseCase;
@@ -182,5 +189,42 @@ public class CategoryAPITest {
                         jsonPath("$.errors", hasSize(1)),
                         jsonPath("$.errors[0].message", equalTo(expectedErrorMessage))
                 );
+    }
+
+    @Test
+    public void givenAValidCommand_whenCalsUpdateCategory_shouldReturnCategoryId() throws Exception {
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+        when(updateCategoryUseCase.execute(any())).thenReturn(API.Right(UpdateCategoryOutput.from(expectedId)));
+        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateCategoryApiInput));
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                    status().isOk()
+                );
+    }
+
+    @Test
+    public void givenAInvalidName_whenCallsUpdateCategory_thenShouldReturnDomainException() throws Exception {
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+        final String expectedErrorMessage = "Category with ID " + expectedId.getValue() + " was not found";
+        when(updateCategoryUseCase.execute(any())).thenThrow(NotFoundException.with(Category.class, expectedId));
+        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateCategoryApiInput));;
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                        status().isNotFound(),
+                        jsonPath("$.message", equalTo(expectedErrorMessage)));
     }
 }

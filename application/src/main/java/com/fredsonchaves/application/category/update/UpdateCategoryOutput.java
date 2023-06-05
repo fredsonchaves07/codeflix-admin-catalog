@@ -8,4 +8,8 @@ public record UpdateCategoryOutput(CategoryID id) {
     public static UpdateCategoryOutput from(final Category category) {
         return new UpdateCategoryOutput(category.getId());
     }
+
+    public static UpdateCategoryOutput from(final CategoryID id) {
+        return new UpdateCategoryOutput(id);
+    }
 }

@@ -3,6 +3,7 @@ package com.fredsonchaves.infraestructure.api;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
+import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -52,4 +53,16 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "500", description = "An internal server error"),
     })
     CategoryApiOutput getById(@PathVariable(value = "id") String id);
+
+    @PutMapping(value = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Update category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category updated succesfully"),
+            @ApiResponse(responseCode = "404", description = "NotFound"),
+            @ApiResponse(responseCode = "500", description = "An internal server error"),
+    })
+    ResponseEntity<?> updateById(@PathVariable(value = "id") String id, @RequestBody UpdateCategoryApiInput input);
 }
