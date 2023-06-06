@@ -3,6 +3,7 @@ package com.fredsonchaves.infraestructure.api.controllers;
 import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
+import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
 import com.fredsonchaves.application.category.retrieve.get.GetCategoryByIdUseCase;
 import com.fredsonchaves.application.category.update.UpdateCategoryInput;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
@@ -31,14 +32,18 @@ public class CategoryController implements CategoryAPI {
 
     private final UpdateCategoryUseCase updateCategoryUseCase;
 
+    private final DeleteCategoryUseCase deleteCategoryUseCase;
+
     public CategoryController(
             final CreateCategoryUseCase createCategoryUseCase,
             final GetCategoryByIdUseCase getCategoryByIdUseCase,
-            final UpdateCategoryUseCase updateCategoryUseCase
+            final UpdateCategoryUseCase updateCategoryUseCase,
+            final DeleteCategoryUseCase deleteCategoryUseCase
     ) {
         this.createCategoryUseCase = Objects.requireNonNull(createCategoryUseCase);
         this.getCategoryByIdUseCase = Objects.requireNonNull(getCategoryByIdUseCase);
         this.updateCategoryUseCase = Objects.requireNonNull(updateCategoryUseCase);
+        this.deleteCategoryUseCase = Objects.requireNonNull(deleteCategoryUseCase);
     }
 
     @Override
@@ -76,5 +81,10 @@ public class CategoryController implements CategoryAPI {
         final Function<Notification, ResponseEntity<?>> onError = ResponseEntity.unprocessableEntity()::body;
         final Function<UpdateCategoryOutput, ResponseEntity<?>> onSuccess = ResponseEntity::ok;
         return updateCategoryUseCase.execute(categoryInput).fold(onError, onSuccess);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        deleteCategoryUseCase.execute(CategoryID.from(id));
     }
 }

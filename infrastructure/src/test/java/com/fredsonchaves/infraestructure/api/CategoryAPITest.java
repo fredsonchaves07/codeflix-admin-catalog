@@ -264,4 +264,14 @@ public class CategoryAPITest {
                         status().isUnprocessableEntity(),
                         jsonPath("$.message", equalTo(expectedErrorMessage)));
     }
+
+    @Test
+    public void givenAValidId_whenCallsDeleteCategory_shouldBeOk() throws Exception {
+        CategoryID categoryID = CategoryID.from(UUID.randomUUID());
+        doNothing().when(deleteCategoryUseCase).execute(any());
+        MockHttpServletRequestBuilder request = delete("/categories/{id}", categoryID.getValue()).contentType(MediaType.APPLICATION_JSON);
+        mvc.perform(request).andDo(print()).andExpectAll(
+                status().isNoContent()
+        );
+    }
 }
