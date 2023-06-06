@@ -227,4 +227,41 @@ public class CategoryAPITest {
                         status().isNotFound(),
                         jsonPath("$.message", equalTo(expectedErrorMessage)));
     }
+
+    @Test
+    public void givenAInvalidCommandWithInactiveCategory_whenCallsUpdateCategory_thenShouldReturnCategoryId() throws Exception {
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = false;
+        when(updateCategoryUseCase.execute(any())).thenReturn(API.Right(UpdateCategoryOutput.from(expectedId)));
+        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateCategoryApiInput));
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                        status().isOk()
+                );
+    }
+
+    @Test
+    public void givenAValidCommand_whenGatewayThrowsRandomException_shouldReturnAException() throws Exception {
+        CategoryID expectedId = CategoryID.from(UUID.randomUUID());
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+        final String expectedErrorMessage = "Gateway error";
+        when(updateCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error(expectedErrorMessage)));
+        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(updateCategoryApiInput));;
+        mvc.perform(request)
+                .andDo(print())
+                .andExpectAll(
+                        status().isUnprocessableEntity(),
+                        jsonPath("$.message", equalTo(expectedErrorMessage)));
+    }
 }
