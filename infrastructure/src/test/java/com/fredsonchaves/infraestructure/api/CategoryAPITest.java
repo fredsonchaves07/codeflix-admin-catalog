@@ -7,6 +7,7 @@ import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
 import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
 import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
 import com.fredsonchaves.application.category.retrieve.get.GetCategoryByIdUseCase;
+import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
@@ -14,27 +15,26 @@ import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.exceptions.NotFoundException;
+import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
 import io.vavr.API;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 import static io.vavr.API.Left;
 import static io.vavr.API.Right;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -272,6 +272,38 @@ public class CategoryAPITest {
         MockHttpServletRequestBuilder request = delete("/categories/{id}", categoryID.getValue()).contentType(MediaType.APPLICATION_JSON);
         mvc.perform(request).andDo(print()).andExpectAll(
                 status().isNoContent()
+        );
+    }
+
+    @Test
+    public void givenAValidParams_whenCallsListCategories_shouldReturnCategoriesFiltered() throws Exception {
+        final Category category = Category.newCategory("Movies", null, true);
+        final int expectedPage = 0;
+        final int expectedPerPage = 10;
+        final String expectedTerms = "naoexisteessetermo";
+        final String expectedSort = "description";
+        final String expectedDirection = "desc";
+        final int expectedItemsCount = 0;
+        final int expectedTotal = 0;
+        final List<CategoryListOutput> expectedItems = List.of(CategoryListOutput.from(category));
+        when(listCategoriesUseCase.execute(any())).thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
+        MockHttpServletRequestBuilder request = get("/categories")
+                .queryParam("page", String.valueOf(expectedPage))
+                .queryParam("perPage", String.valueOf(expectedPerPage))
+                .queryParam("sort", expectedSort)
+                .queryParam("dir", expectedDirection)
+                .queryParam("search", expectedTerms)
+                .contentType(MediaType.APPLICATION_JSON);
+        mvc.perform(request).andDo(print()).andExpectAll(
+                status().isOk(),
+                jsonPath("$.current_page", equalTo(expectedPage)),
+                jsonPath("$.per_page", equalTo(expectedPerPage)),
+                jsonPath("$.total", equalTo(expectedTotal)),
+                jsonPath("$.items", hasSize(expectedItemsCount)),
+                jsonPath("$.items[0].id", equalTo(category.getId().getValue())),
+                jsonPath("$.items[0].name", equalTo(category.getName())),
+                jsonPath("$.items[0].description", equalTo(category.getDescription())),
+                jsonPath("$.items[0].is_active", equalTo(category.isActive()))
         );
     }
 }
