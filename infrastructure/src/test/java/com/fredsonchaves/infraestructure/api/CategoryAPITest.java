@@ -18,8 +18,8 @@ import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
-import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
-import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
+import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
+import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import io.vavr.API;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +70,7 @@ public class CategoryAPITest {
         final String expectedName = "Filmes";
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
-        final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
+        final CreateCategoryResponse createCategoryInput = new CreateCategoryResponse(
                 expectedName, expectedDescription, expectedIsActive
         );
         when(createCategoryUseCase.execute(any())).thenReturn(Right(CreateCategoryOutput.from("123")));
@@ -95,7 +95,7 @@ public class CategoryAPITest {
         final String expectedName = null;
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
-        final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
+        final CreateCategoryResponse createCategoryInput = new CreateCategoryResponse(
                 expectedName, expectedDescription, expectedIsActive
         );
         when(createCategoryUseCase.execute(any())).thenReturn(Left(Notification.create(new Error("'name' should not be null"))));
@@ -122,7 +122,7 @@ public class CategoryAPITest {
         final String expectedName = null;
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
-        final CreateCategoryApiInput createCategoryInput = new CreateCategoryApiInput(
+        final CreateCategoryResponse createCategoryInput = new CreateCategoryResponse(
                 expectedName, expectedDescription, expectedIsActive
         );
         when(createCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error("'name' should not be null")));
@@ -198,10 +198,10 @@ public class CategoryAPITest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = true;
         when(updateCategoryUseCase.execute(any())).thenReturn(API.Right(UpdateCategoryOutput.from(expectedId)));
-        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        final UpdateCategoryResponse updateCategoryResponse = new UpdateCategoryResponse(expectedName, expectedDescription, expectedIsActive);
         MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(updateCategoryApiInput));
+                .content(mapper.writeValueAsString(updateCategoryResponse));
         mvc.perform(request)
                 .andDo(print())
                 .andExpectAll(
@@ -217,10 +217,10 @@ public class CategoryAPITest {
         final boolean expectedIsActive = true;
         final String expectedErrorMessage = "Category with ID " + expectedId.getValue() + " was not found";
         when(updateCategoryUseCase.execute(any())).thenThrow(NotFoundException.with(Category.class, expectedId));
-        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        final UpdateCategoryResponse updateCategoryResponse = new UpdateCategoryResponse(expectedName, expectedDescription, expectedIsActive);
         MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(updateCategoryApiInput));;
+                .content(mapper.writeValueAsString(updateCategoryResponse));;
         mvc.perform(request)
                 .andDo(print())
                 .andExpectAll(
@@ -235,10 +235,10 @@ public class CategoryAPITest {
         final String expectedDescription = "A categoria mais assistida";
         final boolean expectedIsActive = false;
         when(updateCategoryUseCase.execute(any())).thenReturn(API.Right(UpdateCategoryOutput.from(expectedId)));
-        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        final UpdateCategoryResponse updateCategoryResponse = new UpdateCategoryResponse(expectedName, expectedDescription, expectedIsActive);
         MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(updateCategoryApiInput));
+                .content(mapper.writeValueAsString(updateCategoryResponse));
         mvc.perform(request)
                 .andDo(print())
                 .andExpectAll(
@@ -254,10 +254,10 @@ public class CategoryAPITest {
         final boolean expectedIsActive = true;
         final String expectedErrorMessage = "Gateway error";
         when(updateCategoryUseCase.execute(any())).thenThrow(DomainException.with(new Error(expectedErrorMessage)));
-        final UpdateCategoryApiInput updateCategoryApiInput = new UpdateCategoryApiInput(expectedName, expectedDescription, expectedIsActive);
+        final UpdateCategoryResponse updateCategoryResponse = new UpdateCategoryResponse(expectedName, expectedDescription, expectedIsActive);
         MockHttpServletRequestBuilder request = put("/categories/{id}", expectedId.getValue())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(updateCategoryApiInput));;
+                .content(mapper.writeValueAsString(updateCategoryResponse));;
         mvc.perform(request)
                 .andDo(print())
                 .andExpectAll(
@@ -283,7 +283,7 @@ public class CategoryAPITest {
         final String expectedTerms = "naoexisteessetermo";
         final String expectedSort = "description";
         final String expectedDirection = "desc";
-        final int expectedItemsCount = 0;
+        final int expectedItemsCount = 1;
         final int expectedTotal = 0;
         final List<CategoryListOutput> expectedItems = List.of(CategoryListOutput.from(category));
         when(listCategoriesUseCase.execute(any())).thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));

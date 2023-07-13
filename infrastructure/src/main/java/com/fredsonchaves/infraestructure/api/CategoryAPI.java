@@ -2,8 +2,8 @@ package com.fredsonchaves.infraestructure.api;
 
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
-import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
-import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
+import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
+import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -29,7 +29,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "422", description = "Unprocessable error"),
             @ApiResponse(responseCode = "500", description = "An internal server error"),
     })
-    ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryApiInput input);
+    ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryResponse input);
 
     @GetMapping
     @Operation(summary = "List all categories paginated")
@@ -65,7 +65,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "404", description = "NotFound"),
             @ApiResponse(responseCode = "500", description = "An internal server error"),
     })
-    ResponseEntity<?> updateById(@PathVariable(value = "id") String id, @RequestBody UpdateCategoryApiInput input);
+    ResponseEntity<?> updateById(@PathVariable(value = "id") String id, @RequestBody UpdateCategoryResponse input);
 
     @DeleteMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,

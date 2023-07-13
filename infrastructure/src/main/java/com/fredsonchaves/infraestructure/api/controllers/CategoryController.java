@@ -15,8 +15,8 @@ import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.api.CategoryAPI;
 import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
-import com.fredsonchaves.infraestructure.category.models.CreateCategoryApiInput;
-import com.fredsonchaves.infraestructure.category.models.UpdateCategoryApiInput;
+import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
+import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.presenters.CategoryApiPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +53,7 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public ResponseEntity<?> createCategory(CreateCategoryApiInput input) {
+    public ResponseEntity<?> createCategory(CreateCategoryResponse input) {
         final CreateCategoryInput categoryInput = CreateCategoryInput.with(
                 input.name(),
                 input.description(),
@@ -68,7 +68,9 @@ public class CategoryController implements CategoryAPI {
 
     @Override
     public Pagination<?> listCategories(String search, int page, int perPage, String sort, String direction) {
-        return listCategoriesUseCase.execute(new CategorySearchQuery(page, perPage, search, sort, direction));
+        return listCategoriesUseCase
+                .execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+                .map(CategoryApiPresenter::present);
     }
 
     @Override
@@ -77,7 +79,7 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public ResponseEntity<?> updateById(final String id, final UpdateCategoryApiInput input) {
+    public ResponseEntity<?> updateById(final String id, final UpdateCategoryResponse input) {
         final UpdateCategoryInput categoryInput = UpdateCategoryInput.with(
                 id,
                 input.name(),
