@@ -1,7 +1,7 @@
 package com.fredsonchaves.infraestructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fredsonchaves.ControllerTest;
+import com.fredsonchaves.config.annotations.ControllerTest;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
 import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;

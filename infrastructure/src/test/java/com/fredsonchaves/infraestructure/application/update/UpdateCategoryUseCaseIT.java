@@ -1,6 +1,6 @@
 package com.fredsonchaves.infraestructure.application.update;
 
-import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.update.UpdateCategoryInput;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
@@ -12,20 +12,14 @@ import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 

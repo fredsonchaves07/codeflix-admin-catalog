@@ -1,5 +1,6 @@
-package com.fredsonchaves;
+package com.fredsonchaves.config.annotations;
 
+import com.fredsonchaves.config.MysqlCleanUpExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;

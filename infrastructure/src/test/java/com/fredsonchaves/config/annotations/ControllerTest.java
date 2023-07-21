@@ -1,4 +1,4 @@
-package com.fredsonchaves;
+package com.fredsonchaves.config.annotations;
 
 import com.fredsonchaves.infraestructure.configuration.ObjectMapperConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

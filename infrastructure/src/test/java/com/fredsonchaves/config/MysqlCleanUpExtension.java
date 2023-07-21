@@ -1,4 +1,4 @@
-package com.fredsonchaves;
+package com.fredsonchaves.config;
 
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;

@@ -1,6 +1,6 @@
 package com.fredsonchaves.infraestructure.application.create;
 
-import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;

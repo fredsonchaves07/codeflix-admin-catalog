@@ -4,7 +4,7 @@ import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.category.CategorySearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
-import com.fredsonchaves.MySQLGatewayTest;
+import com.fredsonchaves.config.annotations.MySQLGatewayTest;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,11 @@
 package com.fredsonchaves.infraestructure.application.retrieve.get;
 
-import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
 import com.fredsonchaves.application.category.retrieve.get.GetCategoryByIdUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

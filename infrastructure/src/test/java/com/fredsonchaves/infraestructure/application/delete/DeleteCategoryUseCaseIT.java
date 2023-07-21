@@ -1,6 +1,6 @@
 package com.fredsonchaves.infraestructure.application.delete;
 
-import com.fredsonchaves.IntegrationTest;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
