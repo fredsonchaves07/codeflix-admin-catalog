@@ -39,7 +39,7 @@ public class CreateCategoryUseCaseIT {
         );
         final CreateCategoryOutput actualOutput = useCase.execute(createCategoryInput).get();
         assertEquals(1, repository.count());
-        final CategoryJpaEntity actualCategory =  repository.findById(actualOutput.id().getValue()).get();
+        final CategoryJpaEntity actualCategory =  repository.findById(actualOutput.id()).get();
         assertEquals(expectedName, actualCategory.getName());
         assertEquals(expectedDescription, actualCategory.getDescription());
         assertEquals(expectedIsActive, actualCategory.isActive());
@@ -77,7 +77,7 @@ public class CreateCategoryUseCaseIT {
         final CreateCategoryOutput actualOutput = useCase.execute(createCategoryInput).get();
         assertNotNull(actualOutput.id());
         assertEquals(1, repository.count());
-        final CategoryJpaEntity actualCategory =  repository.findById(actualOutput.id().getValue()).get();
+        final CategoryJpaEntity actualCategory =  repository.findById(actualOutput.id()).get();
         assertEquals(expectedName, actualCategory.getName());
         assertEquals(expectedDescription, actualCategory.getDescription());
         assertEquals(expectedIsActive, actualCategory.isActive());

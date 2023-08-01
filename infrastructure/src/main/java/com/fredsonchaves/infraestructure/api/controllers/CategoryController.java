@@ -18,7 +18,9 @@ import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.presenters.CategoryApiPresenter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -53,6 +55,7 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
+    @ResponseBody()
     public ResponseEntity<?> createCategory(CreateCategoryResponse input) {
         final CreateCategoryInput categoryInput = CreateCategoryInput.with(
                 input.name(),
@@ -61,7 +64,7 @@ public class CategoryController implements CategoryAPI {
         );
         final Function<Notification, ResponseEntity<?>> onError = ResponseEntity.unprocessableEntity()::body;
         final Function<CreateCategoryOutput, ResponseEntity<?>> onSuccess = output ->
-                ResponseEntity.created(URI.create("/categories/" + output.id().getValue())).body(output);
+                ResponseEntity.created(URI.create("/categories/" + output.id())).body(output);
         return createCategoryUseCase.execute(categoryInput)
                 .fold(onError, onSuccess);
     }

@@ -10,6 +10,6 @@ public class ObjectMapperConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return Json.getMapper();
+        return Json.mapper();
     }
 }
