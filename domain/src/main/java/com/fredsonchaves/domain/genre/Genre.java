@@ -1,7 +1,7 @@
 package com.fredsonchaves.domain.genre;
 
 import com.fredsonchaves.domain.AggregateRoot;
-import com.fredsonchaves.domain.category.Category;
+import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.NotificationException;
 import com.fredsonchaves.domain.validation.ValidationHandler;
 import com.fredsonchaves.domain.validation.handler.Notification;
@@ -17,7 +17,7 @@ public class Genre extends AggregateRoot<GenreID> {
 
     private boolean isActive;
 
-    private List<Category> categories;
+    private List<CategoryID> categories;
 
     private Instant createdAt;
 
@@ -25,7 +25,7 @@ public class Genre extends AggregateRoot<GenreID> {
 
     private Instant deletedAt;
 
-    private Genre(final GenreID id, final String name, final boolean isActive, final List<Category> categories,final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
+    private Genre(final GenreID id, final String name, final boolean isActive, final List<CategoryID> categories,final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
         super(id);
         this.name = name;
         this.isActive = isActive;
@@ -47,7 +47,7 @@ public class Genre extends AggregateRoot<GenreID> {
         return new Genre(id, name, isActive, new ArrayList<>(), now, now, deletedAt);
     }
 
-    public static Genre newGenre(final GenreID id, final String name, final boolean isActive, final List<Category> categories,final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
+    public static Genre newGenre(final GenreID id, final String name, final boolean isActive, final List<CategoryID> categories,final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
         return new Genre(id, name, isActive, categories, createdAt, updatedAt, deletedAt);
     }
 
@@ -60,6 +60,34 @@ public class Genre extends AggregateRoot<GenreID> {
         new GenreValidator(this, handler).validate();
     }
 
+    public void activate() {
+        isActive = true;
+        deletedAt = null;
+        updatedAt = Instant.now();
+    }
+
+    public void deactivate() {
+        isActive = false;
+        deletedAt = Instant.now();
+        updatedAt = Instant.now();
+    }
+
+    public Genre update(String name, boolean isActive, List<CategoryID> categories) {
+        if (isActive)
+            activate();
+        else
+            deactivate();
+        this.name = name;
+        this.categories = categories;
+        updatedAt = Instant.now();
+        final Notification notification = Notification.create();
+        validate(notification);
+        if (notification.hasError()) {
+            throw new NotificationException("", notification);
+        }
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -68,7 +96,7 @@ public class Genre extends AggregateRoot<GenreID> {
         return isActive;
     }
 
-    public List<Category> getCategories() {
+    public List<CategoryID> getCategories() {
         return Collections.unmodifiableList(categories);
     }
 
