@@ -4,7 +4,7 @@ import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
 import com.fredsonchaves.domain.category.Category;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
@@ -51,7 +51,7 @@ public class ListCategoriesUseCaseIT {
         final String expectedDirection = "asc";
         final int expectedItemsCount = 0;
         final int expectedTotal = 0;
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         Pagination<CategoryListOutput> actualResult = useCase.execute(query);
@@ -80,7 +80,7 @@ public class ListCategoriesUseCaseIT {
     ) {
         final String expectedSort = "name";
         final String expectedDirection = "asc";
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         Pagination<CategoryListOutput> actualResult = useCase.execute(query);
@@ -107,7 +107,7 @@ public class ListCategoriesUseCaseIT {
             final long expectedTotal,
             final String expectedCategoryName
     ) {
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, "", expectedSort, expectedDirection
         );
         Pagination<CategoryListOutput> actualResult = useCase.execute(query);
@@ -135,7 +135,7 @@ public class ListCategoriesUseCaseIT {
         final String expectedTerms = "";
         final String expectedSort = "name";
         final String expectedDirection = "asc";
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         Pagination<CategoryListOutput> actualResult = useCase.execute(query);

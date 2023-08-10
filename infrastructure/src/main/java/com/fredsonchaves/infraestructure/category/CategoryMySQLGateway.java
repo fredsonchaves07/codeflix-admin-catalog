@@ -3,7 +3,7 @@ package com.fredsonchaves.infraestructure.category;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
@@ -13,8 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.*;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Component
@@ -64,7 +62,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery query) {
+    public Pagination<Category> findAll(final SearchQuery query) {
         final PageRequest page = PageRequest.of(
                 query.page(),
                 query.perPage(),

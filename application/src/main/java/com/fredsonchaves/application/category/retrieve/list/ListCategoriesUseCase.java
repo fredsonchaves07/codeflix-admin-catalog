@@ -1,10 +1,10 @@
 package com.fredsonchaves.application.category.retrieve.list;
 
 import com.fredsonchaves.application.UseCase;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 
-public interface ListCategoriesUseCase extends UseCase<CategorySearchQuery, Pagination<CategoryListOutput>> {
+public interface ListCategoriesUseCase extends UseCase<SearchQuery, Pagination<CategoryListOutput>> {
 
-    Pagination<CategoryListOutput> execute(final CategorySearchQuery query);
+    Pagination<CategoryListOutput> execute(final SearchQuery query);
 }

@@ -1,11 +1,10 @@
 package com.fredsonchaves.application.retrieve.list;
 
-import com.fredsonchaves.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
 import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.DefaultListCategoriesUseCase;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,7 @@ public class ListCategoriesUseCaseTest {
         final String expectedSort = "createdAt";
         final String expectedDirection = "asc";
 
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, categories.size(), categories);
@@ -71,7 +70,7 @@ public class ListCategoriesUseCaseTest {
         final String expectedSort = "createdAt";
         final String expectedDirection = "asc";
 
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         Pagination<Category> expectedPagination = new Pagination<>(expectedPage, expectedPerPage, 0, categories);
@@ -95,7 +94,7 @@ public class ListCategoriesUseCaseTest {
         final String expectedDirection = "asc";
         final String expectedErrorMessage = "Gateway error";
 
-        CategorySearchQuery query = new CategorySearchQuery(
+        SearchQuery query = new SearchQuery(
                 expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection
         );
         when(gateway.findAll(eq(query))).thenThrow(new IllegalStateException(expectedErrorMessage));

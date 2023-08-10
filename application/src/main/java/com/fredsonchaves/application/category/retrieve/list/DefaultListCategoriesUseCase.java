@@ -1,7 +1,7 @@
 package com.fredsonchaves.application.category.retrieve.list;
 
 import com.fredsonchaves.domain.category.CategoryGateway;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ public class DefaultListCategoriesUseCase implements ListCategoriesUseCase{
     }
 
     @Override
-    public Pagination<CategoryListOutput> execute(final CategorySearchQuery query) {
+    public Pagination<CategoryListOutput> execute(final SearchQuery query) {
         return gateway.findAll(query).map(CategoryListOutput::from);
     }
 }

@@ -10,7 +10,7 @@ import com.fredsonchaves.application.category.update.UpdateCategoryInput;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.api.CategoryAPI;
@@ -18,7 +18,6 @@ import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.presenters.CategoryApiPresenter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,7 +71,7 @@ public class CategoryController implements CategoryAPI {
     @Override
     public Pagination<?> listCategories(String search, int page, int perPage, String sort, String direction) {
         return listCategoriesUseCase
-                .execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+                .execute(new SearchQuery(page, perPage, search, sort, direction))
                 .map(CategoryApiPresenter::present);
     }
 

@@ -2,7 +2,7 @@ package com.fredsonchaves.infraestructure.category;
 
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.category.CategorySearchQuery;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.config.annotations.MySQLGatewayTest;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
@@ -119,7 +119,7 @@ public class CategoryMySQLGatewayTest {
                 CategoryJpaEntity.from(documentarios)
         ));
         assertEquals(3, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -134,7 +134,7 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 1;
         final var expectedTotal = 0;
         assertEquals(0, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -157,7 +157,7 @@ public class CategoryMySQLGatewayTest {
                 CategoryJpaEntity.from(documentarios)
         ));
         assertEquals(3, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -165,7 +165,7 @@ public class CategoryMySQLGatewayTest {
         assertEquals(expectedPerPage, actualResult.items().size());
         assertEquals(documentarios.getId(), actualResult.items().get(0).getId());
         expectedPage = 1;
-        query = new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        query = new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
         actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -173,7 +173,7 @@ public class CategoryMySQLGatewayTest {
         assertEquals(expectedPerPage, actualResult.items().size());
         assertEquals(filmes.getId(), actualResult.items().get(0).getId());
         expectedPage = 2;
-        query = new CategorySearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
+        query = new SearchQuery(expectedPage, expectedPerPage, "", "name", "asc");
         actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -197,7 +197,7 @@ public class CategoryMySQLGatewayTest {
                 CategoryJpaEntity.from(documentarios)
         ));
         assertEquals(3, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "doc", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "doc", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -221,7 +221,7 @@ public class CategoryMySQLGatewayTest {
                 CategoryJpaEntity.from(documentarios)
         ));
         assertEquals(3, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "mais assistida", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "mais assistida", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
@@ -246,7 +246,7 @@ public class CategoryMySQLGatewayTest {
                 CategoryJpaEntity.from(documentarios)
         ));
         assertEquals(3, repository.count());
-        CategorySearchQuery query = new CategorySearchQuery(expectedPage, expectedPerPage, "MAIS ASSISTIDA", "name", "asc");
+        SearchQuery query = new SearchQuery(expectedPage, expectedPerPage, "MAIS ASSISTIDA", "name", "asc");
         Pagination<Category> actualResult = gateway.findAll(query);
         assertEquals(expectedPage, actualResult.currentPage());
         assertEquals(expectedPerPage, actualResult.perPage());
