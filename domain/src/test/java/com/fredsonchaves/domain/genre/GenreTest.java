@@ -138,4 +138,42 @@ public class GenreTest {
         assertEquals(expectedErrorCount, actualException.getErrors().stream().count());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
     }
+
+    @Test
+    public void givenAValidEmptyCategoriesGenreWhenCallAddCategoriesShouldReceiveOK() {
+        final String expectedName = "Ação";
+        final boolean expectedIsActive = true;
+        final List<CategoryID> expectedCategories = List.of(
+                CategoryID.from("123"),
+                CategoryID.from("651"),
+                CategoryID.from("035")
+        );
+        Genre genre = Genre.newGenre(expectedName, expectedIsActive);
+        genre.addCategory(CategoryID.from("123"));
+        genre.addCategory(CategoryID.from("651"));
+        genre.addCategory(CategoryID.from("035"));
+        assertEquals(expectedName, genre.getName());
+        assertEquals(expectedIsActive, genre.isActive());
+        assertEquals(expectedCategories, genre.getCategories());
+        assertNull(genre.getDeletedAt());
+    }
+
+    @Test
+    public void givenAValidCategoriesGenreWhenCallRemoveCategoriesShouldReceiveOK() {
+        final String expectedName = "Ação";
+        final boolean expectedIsActive = true;
+        final List<CategoryID> categories = List.of(
+                CategoryID.from("123"),
+                CategoryID.from("651"),
+                CategoryID.from("035")
+        );
+        Genre genre = Genre.newGenre(expectedName, expectedIsActive, categories);
+        genre.removeCategory(CategoryID.from("123"));
+        genre.removeCategory(CategoryID.from("651"));
+        genre.removeCategory(CategoryID.from("035"));
+        assertEquals(expectedName, genre.getName());
+        assertEquals(expectedIsActive, genre.isActive());
+        assertTrue(genre.getCategories().isEmpty());
+        assertNull(genre.getDeletedAt());
+    }
 }

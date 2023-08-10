@@ -29,7 +29,7 @@ public class Genre extends AggregateRoot<GenreID> {
         super(id);
         this.name = name;
         this.isActive = isActive;
-        this.categories = categories;
+        this.categories = new ArrayList<>(categories);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -47,8 +47,11 @@ public class Genre extends AggregateRoot<GenreID> {
         return new Genre(id, name, isActive, new ArrayList<>(), now, now, deletedAt);
     }
 
-    public static Genre newGenre(final GenreID id, final String name, final boolean isActive, final List<CategoryID> categories,final Instant createdAt, final Instant updatedAt, final Instant deletedAt) {
-        return new Genre(id, name, isActive, categories, createdAt, updatedAt, deletedAt);
+    public static Genre newGenre(final String name, final boolean isActive,  List<CategoryID> categories) {
+        final GenreID id = GenreID.unique();
+        final Instant now = Instant.now();
+        final Instant deletedAt = isActive ? null : now;
+        return new Genre(id, name, isActive, categories, now, now, deletedAt);
     }
 
     public static Genre newGenre(final Genre genre) {
@@ -79,12 +82,24 @@ public class Genre extends AggregateRoot<GenreID> {
             deactivate();
         this.name = name;
         this.categories = categories;
-        updatedAt = Instant.now();
+        this.updatedAt = Instant.now();
         final Notification notification = Notification.create();
         validate(notification);
         if (notification.hasError()) {
             throw new NotificationException("", notification);
         }
+        return this;
+    }
+
+    public Genre addCategory(CategoryID categoryID) {
+        if (categoryID != null)
+            categories.add(categoryID);
+        return this;
+    }
+
+    public Genre removeCategory(CategoryID categoryID) {
+        if (categoryID != null)
+            categories.remove(categoryID);
         return this;
     }
 
