@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -87,5 +89,10 @@ public class CategoryMySQLGateway implements CategoryGateway {
                 pageResult.map(
                         CategoryJpaEntity::toAggregate
                 ).stream().toList());
+    }
+
+    @Override
+    public List<CategoryID> existsByIds(final Iterable<CategoryID> ids) {
+        return Collections.emptyList();
     }
 }

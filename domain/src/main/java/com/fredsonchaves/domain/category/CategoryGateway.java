@@ -3,6 +3,7 @@ package com.fredsonchaves.domain.category;
 import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CategoryGateway {
@@ -16,4 +17,6 @@ public interface CategoryGateway {
     Category update(Category category);
 
     Pagination<Category> findAll(SearchQuery searchQuery);
+
+    List<CategoryID> existsByIds(Iterable<CategoryID> ids);
 }

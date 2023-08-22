@@ -1,4 +1,4 @@
-package com.fredsonchaves.application.retrieve.get;
+package com.fredsonchaves.application.category.retrieve.get;
 
 import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
 import com.fredsonchaves.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;

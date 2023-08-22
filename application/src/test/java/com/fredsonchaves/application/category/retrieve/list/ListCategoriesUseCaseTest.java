@@ -1,4 +1,4 @@
-package com.fredsonchaves.application.retrieve.list;
+package com.fredsonchaves.application.category.retrieve.list;
 
 import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.DefaultListCategoriesUseCase;
