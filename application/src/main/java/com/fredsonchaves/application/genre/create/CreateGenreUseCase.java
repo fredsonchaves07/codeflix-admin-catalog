@@ -36,6 +36,7 @@ public class CreateGenreUseCase implements UseCase<CreateGenreCommand, CreateGen
         Genre genre = notification.validate(() -> Genre.newGenre(name, isActive));
         if (notification.hasError())
             throw new NotificationException("Could not create a genre", notification);
+        genre.addCategories(categoryIDS);
         return CreateGenreOutput.from(genreGateway.create(genre));
     }
 

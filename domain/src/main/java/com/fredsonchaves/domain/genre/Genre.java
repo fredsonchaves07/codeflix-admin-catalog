@@ -91,9 +91,15 @@ public class Genre extends AggregateRoot<GenreID> {
         return this;
     }
 
-    public Genre addCategory(CategoryID categoryID) {
+    public Genre addCategory(final CategoryID categoryID) {
         if (categoryID != null)
             categories.add(categoryID);
+        return this;
+    }
+
+    public Genre addCategories(final List<CategoryID> categories) {
+        if(categories != null || !categories.isEmpty())
+            categories.forEach(this::addCategory);
         return this;
     }
 

@@ -1,6 +1,5 @@
 package com.fredsonchaves.domain.genre;
 
-import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Test;
