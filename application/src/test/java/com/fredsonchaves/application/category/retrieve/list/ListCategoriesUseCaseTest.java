@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.category.retrieve.list;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.DefaultListCategoriesUseCase;
 import com.fredsonchaves.domain.category.Category;
@@ -21,7 +22,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ListCategoriesUseCaseTest {
+public class ListCategoriesUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultListCategoriesUseCase useCase;
@@ -29,16 +30,16 @@ public class ListCategoriesUseCaseTest {
     @Mock
     private CategoryGateway gateway;
 
-    @BeforeEach
-    public void cleanUp() {
-        Mockito.reset(gateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 
     @Test
     public void givenAValidQuery_whenCallsListCategories_thenShouldReturnCategoriesList() {
         List<Category> categories = List.of(
                 Category.newCategory("Filmes", null, true),
-                Category.newCategory("Séries", null, true)
+                Category.newCategory("Sï¿½ries", null, true)
         );
         final int expectedPage = 0;
         final int expectedPerPage = 0;

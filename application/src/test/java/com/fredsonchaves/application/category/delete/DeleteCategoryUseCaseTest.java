@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.category.delete;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
@@ -11,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -19,7 +21,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DeleteCategoryUseCaseTest {
+public class DeleteCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultDeleteCategoryUseCase useCase;
@@ -27,9 +29,9 @@ public class DeleteCategoryUseCaseTest {
     @Mock
     private CategoryGateway gateway;
 
-    @BeforeEach
-    public void cleanUp() {
-        Mockito.reset(gateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 
     @Test

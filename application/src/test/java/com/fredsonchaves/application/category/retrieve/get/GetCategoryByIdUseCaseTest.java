@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.category.retrieve.get;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.application.category.retrieve.get.CategoryOutput;
 import com.fredsonchaves.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
 import com.fredsonchaves.domain.category.Category;
@@ -16,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GetCategoryByIdUseCaseTest {
+public class GetCategoryByIdUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultGetCategoryByIdUseCase useCase;
@@ -31,9 +33,9 @@ public class GetCategoryByIdUseCaseTest {
     @Mock
     private CategoryGateway gateway;
 
-    @BeforeEach
-    public void cleanUp() {
-        Mockito.reset(gateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 
     @Test

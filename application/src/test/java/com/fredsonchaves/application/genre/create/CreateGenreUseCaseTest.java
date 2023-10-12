@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.genre.create;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.NotificationException;
@@ -21,8 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-public class CreateGenreUseCaseTest {
+public class CreateGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private CreateGenreUseCase useCase;
@@ -33,9 +33,14 @@ public class CreateGenreUseCaseTest {
     @Mock
     private CategoryGateway categoryGateway;
 
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway, genreGateway);
+    }
+
     @Test
     public void givenAvalidCommand_whenCallsCreateGenre_shouldReturnGenreId() {
-        final String expectName = "Ação";
+        final String expectName = "Aï¿½ï¿½o";
         final boolean isActive = true;
         final List<CategoryID> expectedCategories = List.of();
         final CreateGenreCommand command = CreateGenreCommand.with(expectName, isActive, asString(expectedCategories));
@@ -55,7 +60,7 @@ public class CreateGenreUseCaseTest {
 
     @Test
     public void givenAValidCommandWithCategories_WhenCallsCreateGenre_shouldReturnGenreId() {
-        final String expectName = "Ação";
+        final String expectName = "Aï¿½ï¿½o";
         final boolean isActive = true;
         final List<CategoryID> expectedCategories = List.of(
                 CategoryID.from("123"),
@@ -116,7 +121,7 @@ public class CreateGenreUseCaseTest {
     public void givenAValidCommand_WhenCallsCreateGenreAndSomeCategoriesDoesNotExists_shouldReturnDomainException() {
         final String expectedErrorMessage = "Some categories could not be found: 456, 789";
         final int expectedErrorCount = 1;
-        final String expectName = "Ação";
+        final String expectName = "Aï¿½ï¿½o";
         final boolean isActive = true;
         final List<CategoryID> expectedCategories = List.of(
                 CategoryID.from("123"),

@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.genre.update;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.application.genre.create.CreateGenreCommand;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
@@ -22,8 +23,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-public class UpdateGenreUseCaseTest {
+public class UpdateGenreUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private UpdateGenreUseCase genreUseCase;
@@ -33,6 +33,11 @@ public class UpdateGenreUseCaseTest {
 
     @Mock
     private GenreGateway genreGateway;
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway, genreGateway);
+    }
 
     @Test
     public void givenAValidCommand_whenUpdateGenre_shouldReturnGenreId() {

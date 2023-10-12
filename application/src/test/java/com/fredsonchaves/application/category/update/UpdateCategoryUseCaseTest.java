@@ -1,5 +1,6 @@
 package com.fredsonchaves.application.category.update;
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
@@ -15,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UpdateCategoryUseCaseTest {
+public class UpdateCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultUpdateCategoryUseCase useCase;
@@ -32,9 +34,9 @@ public class UpdateCategoryUseCaseTest {
     @Mock
     private CategoryGateway gateway;
 
-    @BeforeEach
-    public void cleanUp() {
-        Mockito.reset(gateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(gateway);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.fredsonchaves.application.category.create;
 
 
+import com.fredsonchaves.application.UseCaseTest;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateCategoryUseCaseTest {
+public class CreateCategoryUseCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultCreateCategoryUseCase createCategoryUseCase;
@@ -28,11 +30,10 @@ public class CreateCategoryUseCaseTest {
     @Mock
     private CategoryGateway categoryGateway;
 
-    @BeforeEach
-    public void cleanUp() {
-        Mockito.reset(categoryGateway);
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway);
     }
-
 
     @Test
     public void givenAValidCommand_whenCalsCreateCategory_shouldReturnCategoryId() {
