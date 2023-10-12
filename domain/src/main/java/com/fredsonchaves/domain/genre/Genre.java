@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Genre extends AggregateRoot<GenreID> {
+public class Genre extends AggregateRoot<GenreID> implements Cloneable {
 
     private String name;
 
@@ -131,5 +131,14 @@ public class Genre extends AggregateRoot<GenreID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    @Override
+    public Genre clone() {
+        try {
+            return (Genre) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
