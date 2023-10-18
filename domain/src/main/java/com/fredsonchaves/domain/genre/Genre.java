@@ -58,6 +58,10 @@ public class Genre extends AggregateRoot<GenreID> implements Cloneable {
         return new Genre(genre.id, genre.getName(), genre.isActive(), genre.getCategories(), genre.getCreatedAt(), genre.getUpdatedAt(), genre.getDeletedAt());
     }
 
+    public static Genre with(GenreID genreID, String name, boolean active, List<CategoryID> categoryIDS, Instant createdAt, Instant updatedAt, Instant deletedAt) {
+        return new Genre(genreID, name, active, categoryIDS, createdAt, updatedAt, deletedAt);
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new GenreValidator(this, handler).validate();
