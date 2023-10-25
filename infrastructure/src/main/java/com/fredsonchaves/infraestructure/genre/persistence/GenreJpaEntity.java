@@ -4,10 +4,7 @@ import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.genre.Genre;
 import com.fredsonchaves.domain.genre.GenreID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Set;
 
@@ -18,6 +15,7 @@ import static javax.persistence.FetchType.EAGER;
 @Table(name = "genres")
 public class GenreJpaEntity {
 
+    @Id
     @Column(name = "id", nullable = false)
     private String id;
 
