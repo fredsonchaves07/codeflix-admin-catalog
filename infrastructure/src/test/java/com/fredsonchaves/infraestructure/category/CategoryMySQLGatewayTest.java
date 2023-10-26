@@ -110,8 +110,8 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 1;
         final var expectedTotal = 3;
         Category filmes = Category.newCategory("Filmes", null, true);
-        Category series = Category.newCategory("Séries", null, true);
-        Category documentarios = Category.newCategory("Documentários", null, true);
+        Category series = Category.newCategory("Sï¿½ries", null, true);
+        Category documentarios = Category.newCategory("Documentï¿½rios", null, true);
         assertEquals(0, repository.count());
         repository.saveAllAndFlush(List.of(
                 CategoryJpaEntity.from(filmes),
@@ -148,8 +148,8 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 1;
         final var expectedTotal = 3;
         Category filmes = Category.newCategory("Filmes", null, true);
-        Category series = Category.newCategory("Séries", null, true);
-        Category documentarios = Category.newCategory("Documentários", null, true);
+        Category series = Category.newCategory("Sï¿½ries", null, true);
+        Category documentarios = Category.newCategory("Documentï¿½rios", null, true);
         assertEquals(0, repository.count());
         repository.saveAllAndFlush(List.of(
                 CategoryJpaEntity.from(filmes),
@@ -188,8 +188,8 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 1;
         final var expectedTotal = 1;
         Category filmes = Category.newCategory("Filmes", null, true);
-        Category series = Category.newCategory("Séries", null, true);
-        Category documentarios = Category.newCategory("Documentários", null, true);
+        Category series = Category.newCategory("Sï¿½ries", null, true);
+        Category documentarios = Category.newCategory("Documentï¿½rios", null, true);
         assertEquals(0, repository.count());
         repository.saveAllAndFlush(List.of(
                 CategoryJpaEntity.from(filmes),
@@ -212,8 +212,8 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 2;
         final var expectedTotal = 2;
         Category filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
-        Category series = Category.newCategory("Séries", "Uma categoria assistida", true);
-        Category documentarios = Category.newCategory("Documentários", "A categoria mais assistida", true);
+        Category series = Category.newCategory("Sï¿½ries", "Uma categoria assistida", true);
+        Category documentarios = Category.newCategory("Documentï¿½rios", "A categoria mais assistida", true);
         assertEquals(0, repository.count());
         repository.saveAllAndFlush(List.of(
                 CategoryJpaEntity.from(filmes),
@@ -237,8 +237,8 @@ public class CategoryMySQLGatewayTest {
         final var expectedPerPage = 2;
         final var expectedTotal = 2;
         Category filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
-        Category series = Category.newCategory("Séries", "Uma categoria assistida", true);
-        Category documentarios = Category.newCategory("Documentários", "A categoria mais assistida", true);
+        Category series = Category.newCategory("Sï¿½ries", "Uma categoria assistida", true);
+        Category documentarios = Category.newCategory("Documentï¿½rios", "A categoria mais assistida", true);
         assertEquals(0, repository.count());
         repository.saveAllAndFlush(List.of(
                 CategoryJpaEntity.from(filmes),
