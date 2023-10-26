@@ -1,11 +1,11 @@
-package com.fredsonchaves.infraestructure.application.retrieve.list;
+package com.fredsonchaves.infraestructure.category.retrieve.list;
 
-import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.domain.category.Category;
-import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,11 +32,11 @@ public class ListCategoriesUseCaseIT {
     public void mockUp() {
         final List<CategoryJpaEntity> categories = Stream.of(
                 Category.newCategory("Filmes", null, true),
-                Category.newCategory("Netflix Originals", "Títulos de autoria", true),
-                Category.newCategory("Amazon Originals", "Títulos de autoria da Amazon", true),
-                Category.newCategory("Documentários", null, true),
+                Category.newCategory("Netflix Originals", "Tï¿½tulos de autoria", true),
+                Category.newCategory("Amazon Originals", "Tï¿½tulos de autoria da Amazon", true),
+                Category.newCategory("Documentï¿½rios", null, true),
                 Category.newCategory("Sports", null, true),
-                Category.newCategory("Kids", "Categoria para Crianças", true),
+                Category.newCategory("Kids", "Categoria para Crianï¿½as", true),
                 Category.newCategory("Series", null, true)
         ).map(CategoryJpaEntity::from).toList();
         repository.saveAllAndFlush(categories);
@@ -67,7 +67,7 @@ public class ListCategoriesUseCaseIT {
             "net,0,10,1,1,Netflix Originals",
             "ZON,0,10,1,1,Amazon Originals",
             "KI,0,10,1,1,Kids",
-            "crianças,0,10,1,1,Kids",
+            "crianï¿½as,0,10,1,1,Kids",
             "da Amazon ,0,10,1,1,Amazon Originals",
     })
     public void givenAValidTerm_whenCallsListCategories_shouldReturnCategoriesFiltered(
@@ -120,7 +120,7 @@ public class ListCategoriesUseCaseIT {
 
     @ParameterizedTest
     @CsvSource({
-            "0,2,2,7,Amazon Originals;Documentários",
+            "0,2,2,7,Amazon Originals;Documentï¿½rios",
             "1,2,2,7,Filmes;Kids",
             "2,2,2,7,Netflix Originals;Series",
             "3,2,1,7,Sports",

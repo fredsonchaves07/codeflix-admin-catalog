@@ -1,4 +1,4 @@
-package com.fredsonchaves.infraestructure.api;
+package com.fredsonchaves.infraestructure.category.api;
 
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.infraestructure.category.CategoryApiOutput;

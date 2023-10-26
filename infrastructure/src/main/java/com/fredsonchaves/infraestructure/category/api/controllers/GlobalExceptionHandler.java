@@ -1,4 +1,4 @@
-package com.fredsonchaves.infraestructure.api.controllers;
+package com.fredsonchaves.infraestructure.category.api.controllers;
 
 import com.fredsonchaves.domain.exceptions.DomainException;
 import com.fredsonchaves.domain.exceptions.NotFoundException;

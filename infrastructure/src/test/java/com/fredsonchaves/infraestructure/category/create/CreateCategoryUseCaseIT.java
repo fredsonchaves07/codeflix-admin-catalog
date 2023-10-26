@@ -1,9 +1,9 @@
-package com.fredsonchaves.infraestructure.application.create;
+package com.fredsonchaves.infraestructure.category.create;
 
-import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;

@@ -1,9 +1,9 @@
-package com.fredsonchaves.infraestructure.application.update;
+package com.fredsonchaves.infraestructure.category.update;
 
-import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.update.UpdateCategoryInput;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
@@ -18,9 +18,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @IntegrationTest

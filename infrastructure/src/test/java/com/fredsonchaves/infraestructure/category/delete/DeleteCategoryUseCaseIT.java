@@ -1,7 +1,7 @@
-package com.fredsonchaves.infraestructure.application.delete;
+package com.fredsonchaves.infraestructure.category.delete;
 
-import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
+import com.fredsonchaves.config.annotations.IntegrationTest;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
 
 @IntegrationTest
 public class DeleteCategoryUseCaseIT {

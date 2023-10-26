@@ -1,4 +1,4 @@
-package com.fredsonchaves.infraestructure.api.controllers;
+package com.fredsonchaves.infraestructure.category.api.controllers;
 
 import com.fredsonchaves.application.category.create.CreateCategoryInput;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
@@ -10,11 +10,11 @@ import com.fredsonchaves.application.category.update.UpdateCategoryInput;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.validation.handler.Notification;
-import com.fredsonchaves.infraestructure.api.CategoryAPI;
 import com.fredsonchaves.infraestructure.category.CategoryApiOutput;
+import com.fredsonchaves.infraestructure.category.api.CategoryAPI;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.presenters.CategoryApiPresenter;
