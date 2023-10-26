@@ -6,6 +6,8 @@ import com.fredsonchaves.domain.genre.GenreID;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
@@ -31,7 +33,7 @@ public class GenreJpaEntity {
             fetch = EAGER,
             orphanRemoval = true
     )
-    private Set<GenreCategoryJpaEntity> categories;
+    private Set<GenreCategoryJpaEntity> categories = new HashSet<>();
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
@@ -73,7 +75,7 @@ public class GenreJpaEntity {
                 GenreID.from(getId()),
                 getName(),
                 isActive(),
-                getCategories().stream().map(it -> CategoryID.from(it.getId().getCategoryId())).toList(),
+                getCategoryIds(),
                 getCreatedAt(),
                 getUpdatedAt(),
                 getDeletedAt()
@@ -106,6 +108,10 @@ public class GenreJpaEntity {
 
     public Set<GenreCategoryJpaEntity> getCategories() {
         return categories;
+    }
+
+    public List<CategoryID> getCategoryIds() {
+        return categories.stream().map(category -> CategoryID.from(category.getId().getCategoryId())).toList();
     }
 
     public void addCategory(CategoryID category) {
