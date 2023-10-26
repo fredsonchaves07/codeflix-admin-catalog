@@ -1,10 +1,10 @@
 package com.fredsonchaves.infraestructure.category;
 
+import com.fredsonchaves.config.annotations.MySQLGatewayTest;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
-import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.domain.pagination.Pagination;
-import com.fredsonchaves.config.annotations.MySQLGatewayTest;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryJpaEntity;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Test;
