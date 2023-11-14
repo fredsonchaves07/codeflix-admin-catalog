@@ -51,6 +51,23 @@ public class CreateGenreUseCaseIT {
         assertTrue(actualGenre.isActive());
     }
 
+    @Test
+    public void givenAValidCommandWithoutCategories_WhenCallsCreateGenre_shouldReturnGenreId() {
+        final String expectName = "A��o";
+        final boolean isActive = true;
+        final List<CategoryID> expectedCategories = List.of();
+        final CreateGenreCommand command = CreateGenreCommand.with(expectName, isActive, asString(expectedCategories));
+        final CreateGenreOutput output = useCase.execute(command);
+        assertNotNull(output);
+        assertNotNull(output.id());
+        GenreJpaEntity actualGenre = genreRepository.findById(output.id()).get();
+        assertNotNull(actualGenre.getCreatedAt());
+        assertNull(actualGenre.getDeletedAt());
+        assertNotNull(actualGenre.getUpdatedAt());
+        assertEquals(expectName, actualGenre.getName());
+        assertTrue(actualGenre.isActive());
+    }
+
     private List<String> asString(final List<CategoryID> categoryIDS) {
         return categoryIDS.stream().map(CategoryID::getValue).toList();
     }
