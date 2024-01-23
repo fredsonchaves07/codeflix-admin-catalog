@@ -1,6 +1,5 @@
 package com.fredsonchaves.application.category.update;
 
-import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryGateway;
 import com.fredsonchaves.domain.category.CategoryID;

@@ -27,7 +27,7 @@ public class CreateGenreUseCase implements UseCase<CreateGenreCommand, CreateGen
     }
 
     @Override
-    public CreateGenreOutput execute(CreateGenreCommand command) {
+    public CreateGenreOutput execute(final CreateGenreCommand command) {
         final String name = command.name();
         final boolean isActive = command.isActive();
         final List<CategoryID> categoryIDS = toCategoryId(command.categoriesId());
@@ -37,7 +37,7 @@ public class CreateGenreUseCase implements UseCase<CreateGenreCommand, CreateGen
         if (notification.hasError())
             throw new NotificationException("Could not create a genre", notification);
         genre.addCategories(categoryIDS);
-        return CreateGenreOutput.from(genreGateway.create(genre));
+        return create(genre);
     }
 
     private ValidationHandler validateCategories(List<CategoryID> categoryIDS) {
@@ -57,5 +57,9 @@ public class CreateGenreUseCase implements UseCase<CreateGenreCommand, CreateGen
 
     private List<CategoryID> toCategoryId(final List<String> categoriesId) {
         return categoriesId.stream().map(CategoryID::from).toList();
+    }
+
+    private CreateGenreOutput create(final Genre genre) {
+        return CreateGenreOutput.from(genreGateway.create(genre));
     }
 }

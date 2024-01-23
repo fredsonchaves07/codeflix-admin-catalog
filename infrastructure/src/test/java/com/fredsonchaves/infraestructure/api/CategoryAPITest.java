@@ -1,7 +1,6 @@
 package com.fredsonchaves.infraestructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fredsonchaves.config.annotations.ControllerTest;
 import com.fredsonchaves.application.category.create.CreateCategoryOutput;
 import com.fredsonchaves.application.category.create.CreateCategoryUseCase;
 import com.fredsonchaves.application.category.delete.DeleteCategoryUseCase;
@@ -11,6 +10,7 @@ import com.fredsonchaves.application.category.retrieve.list.CategoryListOutput;
 import com.fredsonchaves.application.category.retrieve.list.ListCategoriesUseCase;
 import com.fredsonchaves.application.category.update.UpdateCategoryOutput;
 import com.fredsonchaves.application.category.update.UpdateCategoryUseCase;
+import com.fredsonchaves.config.annotations.ControllerTest;
 import com.fredsonchaves.domain.category.Category;
 import com.fredsonchaves.domain.category.CategoryID;
 import com.fredsonchaves.domain.exceptions.DomainException;
@@ -20,6 +20,7 @@ import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
+import com.fredsonchaves.infraestructure.genre.api.controllers.GenreController;
 import io.vavr.API;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ public class CategoryAPITest {
 
     @MockBean
     private DeleteCategoryUseCase deleteCategoryUseCase;
+
+    @MockBean
+    private GenreController genreController;
 
     @Test
     public void givenAValidCommand_whenCalsCreateCategory_shouldReturnCategoryId() throws Exception {
