@@ -3,10 +3,15 @@ package com.fredsonchaves.infraestructure.genre.api.controllers;
 import com.fredsonchaves.application.genre.create.CreateGenreCommand;
 import com.fredsonchaves.application.genre.create.CreateGenreOutput;
 import com.fredsonchaves.application.genre.create.CreateGenreUseCase;
+import com.fredsonchaves.application.genre.delete.DeleteGenreUseCase;
 import com.fredsonchaves.application.genre.retrieve.get.GenreOutput;
 import com.fredsonchaves.application.genre.retrieve.get.GetGenreByIdUseCase;
+import com.fredsonchaves.application.genre.retrieve.list.GenreListUseCase;
+import com.fredsonchaves.application.genre.update.UpdateGenreCommand;
+import com.fredsonchaves.application.genre.update.UpdateGenreUseCase;
 import com.fredsonchaves.domain.genre.GenreID;
 import com.fredsonchaves.domain.pagination.Pagination;
+import com.fredsonchaves.domain.pagination.SearchQuery;
 import com.fredsonchaves.infraestructure.genre.api.GenreAPI;
 import com.fredsonchaves.infraestructure.genre.models.CreateGenreResponse;
 import com.fredsonchaves.infraestructure.genre.models.GenreListResponse;
@@ -24,24 +29,24 @@ public class GenreController implements GenreAPI {
 
     private final GetGenreByIdUseCase getGenreByIdUseCase;
 
-//    private final UpdateGenreUseCase updateGenreUseCase;
-//
-//    private final DeleteGenreUseCase deleteGenreUseCase;
-//
-//    private final GenreListUseCase genreListUseCase;
+    private final UpdateGenreUseCase updateGenreUseCase;
+
+    private final DeleteGenreUseCase deleteGenreUseCase;
+
+    private final GenreListUseCase genreListUseCase;
 
     public GenreController(
             final CreateGenreUseCase createGenreUseCase,
-            final GetGenreByIdUseCase getGenreByIdUseCase
-//            final UpdateGenreUseCase updateGenreUseCase,
-//            final DeleteGenreUseCase deleteGenreUseCase,
-//            final GenreListUseCase genreListUseCase
+            final GetGenreByIdUseCase getGenreByIdUseCase,
+            final UpdateGenreUseCase updateGenreUseCase,
+            final DeleteGenreUseCase deleteGenreUseCase,
+            final GenreListUseCase genreListUseCase
     ) {
         this.createGenreUseCase = createGenreUseCase;
         this.getGenreByIdUseCase = getGenreByIdUseCase;
-//        this.updateGenreUseCase = updateGenreUseCase;
-//        this.deleteGenreUseCase = deleteGenreUseCase;
-//        this.genreListUseCase = genreListUseCase;
+        this.updateGenreUseCase = updateGenreUseCase;
+        this.deleteGenreUseCase = deleteGenreUseCase;
+        this.genreListUseCase = genreListUseCase;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class GenreController implements GenreAPI {
 
     @Override
     public Pagination<GenreListResponse> listGenre(String search, int page, int perPage, String sort, String direction) {
-        return null;
+        return genreListUseCase.execute(new SearchQuery(page, perPage, search, sort, direction)).map(GenreListResponse::from);
     }
 
     @Override
@@ -68,11 +73,14 @@ public class GenreController implements GenreAPI {
 
     @Override
     public ResponseEntity<?> updateById(String id, UpdateGenreResponse updateGenreResponse) {
-        return null;
+        UpdateGenreCommand updateGenreCommand = UpdateGenreCommand.with(
+                id, updateGenreResponse.name(), updateGenreResponse.isActive(), updateGenreResponse.categories()
+        );
+        return ResponseEntity.ok(updateGenreUseCase.execute(updateGenreCommand));
     }
 
     @Override
     public void delete(String id) {
-
+        deleteGenreUseCase.execute(GenreID.from(id));
     }
 }

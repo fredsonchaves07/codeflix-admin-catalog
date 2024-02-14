@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fredsonchaves.application.genre.create.CreateGenreCommand;
 import com.fredsonchaves.application.genre.create.CreateGenreOutput;
 import com.fredsonchaves.application.genre.create.CreateGenreUseCase;
+import com.fredsonchaves.application.genre.delete.DeleteGenreUseCase;
 import com.fredsonchaves.application.genre.retrieve.get.GenreOutput;
 import com.fredsonchaves.application.genre.retrieve.get.GetGenreByIdUseCase;
+import com.fredsonchaves.application.genre.retrieve.list.GenreListUseCase;
+import com.fredsonchaves.application.genre.update.UpdateGenreUseCase;
 import com.fredsonchaves.config.annotations.ControllerTest;
 import com.fredsonchaves.domain.genre.Genre;
 import com.fredsonchaves.domain.genre.GenreID;
@@ -42,6 +45,15 @@ public class GenreApiTest {
 
     @MockBean
     private GetGenreByIdUseCase getGenreByIdUseCase;
+
+    @MockBean
+    private UpdateGenreUseCase updateGenreUseCase;
+
+    @MockBean
+    private DeleteGenreUseCase deleteGenreUseCase;
+
+    @MockBean
+    private GenreListUseCase genreListUseCase;
 
     @Test
     public void givenAValidCommandWhenCallsCreateGenreShouldReturnGenreId() throws Exception {
