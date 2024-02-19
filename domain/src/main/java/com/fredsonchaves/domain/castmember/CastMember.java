@@ -34,6 +34,7 @@ public class CastMember extends AggregateRoot<CastMemberID> {
     public CastMember update(String name, CastMemberType type) {
         this.name = name;
         this.type = type;
+        this.updatedAt = Instant.now();
         selfValidate();
         return this;
     }
