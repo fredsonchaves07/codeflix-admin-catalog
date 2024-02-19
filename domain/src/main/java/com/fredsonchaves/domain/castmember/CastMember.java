@@ -31,6 +31,13 @@ public class CastMember extends AggregateRoot<CastMemberID> {
         return new CastMember(name, type);
     }
 
+    public CastMember update(String name, CastMemberType type) {
+        this.name = name;
+        this.type = type;
+        selfValidate();
+        return this;
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new CastMemberValidator(this, handler).validate();

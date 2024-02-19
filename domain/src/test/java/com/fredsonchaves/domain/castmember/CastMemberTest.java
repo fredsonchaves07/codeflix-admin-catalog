@@ -73,4 +73,14 @@ public class CastMemberTest {
         assertEquals(expectedErrorCount, notificationException.getErrors().size());
         assertEquals(expectedErrorMessage, notificationException.getErrors().get(0).message());
     }
+
+    @Test
+    public void givenAValidCastMemberWhenCallsUpdateShouldReceiveUpdated() {
+        final var expectedName = "Vin Dielsel";
+        final var expectedType = CastMemberType.ACTOR;
+        final var actualMember = CastMember.newMember("vind", CastMemberType.DIRECTOR);
+        actualMember.update(expectedName, expectedType);
+        assertEquals(expectedName, actualMember.getName());
+        assertEquals(expectedType, actualMember.getType());
+    }
 }
