@@ -27,6 +27,28 @@ public class CastMember extends AggregateRoot<CastMemberID> {
         selfValidate();
     }
 
+    private CastMember(
+            CastMemberID castMemberID,
+            String name,
+            CastMemberType type,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        super(castMemberID);
+        this.name = name;
+        this.type = type;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    private CastMember(CastMember castMember) {
+        super(castMember.id);
+        this.name = castMember.getName();
+        this.type = castMember.getType();
+        this.updatedAt = castMember.getUpdatedAt();
+        this.createdAt = castMember.getCreatedAt();
+    }
+
     public static CastMember newMember(String name, CastMemberType type) {
         return new CastMember(name, type);
     }
@@ -48,6 +70,20 @@ public class CastMember extends AggregateRoot<CastMemberID> {
         final var notification = Notification.create();
         validate(notification);
         if (notification.hasError()) throw new NotificationException("Failed to create a cast member", notification);
+    }
+
+    public static CastMember with(
+            final CastMemberID id,
+            final String name,
+            final CastMemberType type,
+            final Instant createdAt,
+            final Instant updatedAt
+    ) {
+        return new CastMember(id, name, type, createdAt, updatedAt);
+    }
+
+    public static CastMember with(final CastMember castMember) {
+        return new CastMember(castMember);
     }
 
     public String getName() {
