@@ -1,7 +1,5 @@
 package com.fredsonchaves.domain.castmember;
 
-import com.fredsonchaves.domain.genre.Genre;
-import com.fredsonchaves.domain.genre.GenreID;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.pagination.SearchQuery;
 
@@ -9,13 +7,13 @@ import java.util.Optional;
 
 public interface CastMemberGateway {
 
-    CastMember create(final Genre genre);
+    CastMember create(final CastMember genre);
 
-    void deleteById(final GenreID id);
+    void deleteById(final CastMemberID id);
 
-    Optional<CastMember> findById(final GenreID id);
+    Optional<CastMember> findById(final CastMemberID id);
 
-    CastMember update(final Genre genre);
+    CastMember update(final CastMember genre);
 
     Pagination<CastMember> findAll(final SearchQuery query);
 }
