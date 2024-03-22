@@ -8,7 +8,7 @@ import com.fredsonchaves.domain.validation.handler.Notification;
 import java.time.Instant;
 import java.util.UUID;
 
-public class CastMember extends AggregateRoot<CastMemberID> {
+public class CastMember extends AggregateRoot<CastMemberID> implements Cloneable {
 
     private String name;
 
@@ -100,5 +100,14 @@ public class CastMember extends AggregateRoot<CastMemberID> {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    @Override
+    public CastMember clone() {
+        try {
+            return (CastMember) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
