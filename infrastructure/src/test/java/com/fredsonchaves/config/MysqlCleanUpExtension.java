@@ -1,5 +1,6 @@
 package com.fredsonchaves.config;
 
+import com.fredsonchaves.infraestructure.castmember.persistence.CastMemberRepository;
 import com.fredsonchaves.infraestructure.category.persistence.CategoryRepository;
 import com.fredsonchaves.infraestructure.genre.persistence.GenreRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -18,7 +19,8 @@ public class MysqlCleanUpExtension implements BeforeEachCallback {
         final ApplicationContext appContext = SpringExtension.getApplicationContext(context);
         cleanUp(List.of(
                 appContext.getBean(GenreRepository.class),
-                appContext.getBean(CategoryRepository.class)
+                appContext.getBean(CategoryRepository.class),
+                appContext.getBean(CastMemberRepository.class)
         ));
     }
 
