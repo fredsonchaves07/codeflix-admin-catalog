@@ -7,13 +7,13 @@ import java.util.Optional;
 
 public interface CastMemberGateway {
 
-    CastMember create(final CastMember genre);
+    CastMember create(final CastMember castMember);
 
     void deleteById(final CastMemberID id);
 
     Optional<CastMember> findById(final CastMemberID id);
 
-    CastMember update(final CastMember genre);
+    CastMember update(final CastMember castMember);
 
     Pagination<CastMember> findAll(final SearchQuery query);
 }
