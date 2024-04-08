@@ -18,6 +18,7 @@ import com.fredsonchaves.domain.exceptions.NotFoundException;
 import com.fredsonchaves.domain.pagination.Pagination;
 import com.fredsonchaves.domain.validation.Error;
 import com.fredsonchaves.domain.validation.handler.Notification;
+import com.fredsonchaves.infraestructure.castmember.api.controllers.CastMemberController;
 import com.fredsonchaves.infraestructure.category.models.CreateCategoryResponse;
 import com.fredsonchaves.infraestructure.category.models.UpdateCategoryResponse;
 import com.fredsonchaves.infraestructure.genre.api.controllers.GenreController;
@@ -68,6 +69,9 @@ public class CategoryAPITest {
 
     @MockBean
     private GenreController genreController;
+
+    @MockBean
+    private CastMemberController castMemberController;
 
     @Test
     public void givenAValidCommand_whenCalsCreateCategory_shouldReturnCategoryId() throws Exception {

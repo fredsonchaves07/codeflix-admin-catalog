@@ -7,7 +7,7 @@ public record CreateCastMemberCommand(
         CastMemberType type
 ) {
 
-    public CreateCastMemberCommand with(final String name, final CastMemberType castMemberType) {
+    public static CreateCastMemberCommand with(final String name, final CastMemberType castMemberType) {
         return new CreateCastMemberCommand(name, castMemberType);
     }
 }
