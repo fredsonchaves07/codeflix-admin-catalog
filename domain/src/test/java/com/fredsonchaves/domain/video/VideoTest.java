@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Year;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VideoTest {
 
@@ -40,19 +39,20 @@ public class VideoTest {
         );
         assertNotNull(actualVideo);
         assertNotNull(actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedGenres, expectedCategories, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
+        assertEquals(expectedTitle, actualVideo.title());
+        assertEquals(expectedDescription, actualVideo.description());
+        assertEquals(expectedLaunchedAt, actualVideo.launchedAt());
+        assertEquals(expectedDuration, actualVideo.duration());
+        assertEquals(expectedPublished, actualVideo.published());
+        assertEquals(expectedOpened, actualVideo.opended());
+        assertEquals(expectedGenres, actualVideo.genres());
+        assertEquals(expectedCategories, actualVideo.categories());
+        assertEquals(expectedMembers, actualVideo.castMemberIDS());
+        assertTrue(actualVideo.video().isEmpty());
+        assertTrue(actualVideo.trailer().isEmpty());
+        assertTrue(actualVideo.banner().isEmpty());
+        assertTrue(actualVideo.thumbnail().isEmpty());
+        assertTrue(actualVideo.thumbnailHalf().isEmpty());
         assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 }
