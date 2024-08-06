@@ -9,7 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PROFILE_ACTIVE=prod
+      - PROFILE_ACTIVE=dev
     links:
       - codeflix-admin-database-dev
     depends_on:
