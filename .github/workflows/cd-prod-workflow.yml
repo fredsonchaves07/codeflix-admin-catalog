@@ -1,4 +1,4 @@
-name: CD CodeFlix Prd
+name: CD CodeFlix Master
 
 on:
   push:
