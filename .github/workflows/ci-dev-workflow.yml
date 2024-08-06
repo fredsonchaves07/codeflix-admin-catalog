@@ -1,14 +1,12 @@
-name: CI/CD for Dev
+name: CI CodeFlix Dev
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
 jobs:
   java:
-    name: build java
+    name: CI develop job codeflix
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +17,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+
+      - name: Build app
+        run: mvn clean package -DskipTests
 
       - name: Run tests
         env:

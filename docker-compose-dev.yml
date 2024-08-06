@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  codeflix-admin-app:
+    image: fredsonchaves07/codeflix-adm-catalog:dev
+    container_name: codeflix-admin-app
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    environment:
+      - PROFILE_ACTIVE=dev
+    links:
+      - codeflix-admin-database-dev
+    depends_on:
+      - codeflix-admin-database-dev
+
+
+  codeflix-admin-database-dev:
+    image: mysql:latest
+    container_name: codeflix-admin-database-dev
+    env_file:
+      - .env
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_ROOT_PASSWORD}
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3306:3306
+    networks:
+      - coeflix-admin-network
+
+networks:
+  coeflix-admin-network:
