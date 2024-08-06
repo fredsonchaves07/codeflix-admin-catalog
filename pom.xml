@@ -8,8 +8,10 @@
     <artifactId>codeflix-admin-catalog</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>domain</module>
+        <module>app</module>
     </modules>
 
     <properties>
@@ -33,4 +35,13 @@
         </dependency>
 
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.9.0</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
