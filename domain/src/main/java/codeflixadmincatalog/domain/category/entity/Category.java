@@ -8,7 +8,7 @@ public final class Category extends Entity<CategoryID> {
 
     private String description;
 
-    private boolean isActive;
+    private final boolean isActive;
 
     private Category(CategoryID categoryID, String name, String description, boolean isActive) {
         super(categoryID);
@@ -36,7 +36,6 @@ public final class Category extends Entity<CategoryID> {
     private Category(String name, boolean isActive) {
         super(CategoryID.newId());
         this.name = name;
-        this.description = description;
         this.isActive = isActive;
         new CategoryValidator(this).validate();
     }
