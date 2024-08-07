@@ -15,12 +15,14 @@ public final class Category extends Entity<CategoryID> {
         this.name = name;
         this.description = description;
         this.isActive = isActive;
+        new CategoryValidator(this).validate();
     }
 
     private Category(CategoryID categoryID, String name, boolean isActive) {
         super(categoryID);
         this.name = name;
         this.isActive = isActive;
+        new CategoryValidator(this).validate();
     }
 
     private Category(String name, String description, boolean isActive) {
@@ -28,6 +30,7 @@ public final class Category extends Entity<CategoryID> {
         this.name = name;
         this.description = description;
         this.isActive = isActive;
+        new CategoryValidator(this).validate();
     }
 
     private Category(String name, boolean isActive) {
@@ -35,6 +38,7 @@ public final class Category extends Entity<CategoryID> {
         this.name = name;
         this.description = description;
         this.isActive = isActive;
+        new CategoryValidator(this).validate();
     }
 
     public static Category create(String name, String description, boolean isActive) {
