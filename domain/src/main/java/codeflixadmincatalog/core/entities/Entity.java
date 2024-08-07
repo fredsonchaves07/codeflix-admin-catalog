@@ -2,7 +2,7 @@ package codeflixadmincatalog.core.entities;
 
 import java.time.LocalDateTime;
 
-public class Entity<ID extends Identifier> {
+public abstract class Entity<ID extends Identifier> {
 
     private final ID id;
 
