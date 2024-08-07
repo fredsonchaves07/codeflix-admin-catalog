@@ -3,7 +3,7 @@ package codeflixadmincatalog.domain.category;
 import codeflixadmincatalog.domain.category.entity.Category;
 import org.junit.jupiter.api.Test;
 
-import static codeflixadmincatalog.domain.utils.factories.MakeCategory.makeCategory;
+import static codeflixadmincatalog.factories.utils.MakeCategory.makeCategory;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Categorytest {
