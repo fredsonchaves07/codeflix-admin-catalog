@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static codeflixadmincatalog.factories.utils.MakeCategory.makeCategory;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class Categorytest {
+public class CategoryTest {
 
     @Test
     public void shouldCreateANewCategory() {
