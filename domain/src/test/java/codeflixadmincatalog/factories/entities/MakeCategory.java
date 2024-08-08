@@ -1,4 +1,4 @@
-package codeflixadmincatalog.factories.utils;
+package codeflixadmincatalog.factories.entities;
 
 import codeflixadmincatalog.domain.entities.category.Category;
 import com.github.javafaker.Faker;
