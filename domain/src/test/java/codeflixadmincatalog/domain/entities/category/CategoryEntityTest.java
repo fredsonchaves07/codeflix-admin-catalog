@@ -1,15 +1,14 @@
 package codeflixadmincatalog.domain.entities.category;
 
 import codeflixadmincatalog.core.errors.DomainError;
-import codeflixadmincatalog.domain.entities.category.Category;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static codeflixadmincatalog.factories.utils.MakeCategory.*;
+import static codeflixadmincatalog.factories.entities.MakeCategory.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CategoryTest {
+public class CategoryEntityTest {
 
     @Test
     public void shouldCreateANewCategory() {
