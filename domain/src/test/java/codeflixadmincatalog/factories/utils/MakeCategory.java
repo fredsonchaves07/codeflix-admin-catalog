@@ -1,6 +1,6 @@
 package codeflixadmincatalog.factories.utils;
 
-import codeflixadmincatalog.domain.category.entity.Category;
+import codeflixadmincatalog.domain.entities.category.Category;
 import com.github.javafaker.Faker;
 
 import java.util.Locale;

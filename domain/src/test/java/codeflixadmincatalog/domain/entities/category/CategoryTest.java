@@ -1,7 +1,7 @@
-package codeflixadmincatalog.domain.category;
+package codeflixadmincatalog.domain.entities.category;
 
 import codeflixadmincatalog.core.errors.DomainError;
-import codeflixadmincatalog.domain.category.entity.Category;
+import codeflixadmincatalog.domain.entities.category.Category;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

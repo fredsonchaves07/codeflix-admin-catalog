@@ -1,4 +1,4 @@
-package codeflixadmincatalog.domain.category.entity;
+package codeflixadmincatalog.domain.entities.category;
 
 import codeflixadmincatalog.core.entities.Identifier;
 
