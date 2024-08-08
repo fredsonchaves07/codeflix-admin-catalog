@@ -25,14 +25,6 @@ public class MakeCategory {
         );
     }
 
-    public static Category makeCategoryWithNullDescription() {
-        return Category.create(
-                faker.lorem().characters(50),
-                null,
-                faker.bool().bool()
-        );
-    }
-
     public static Category makeCategoryWithInactive() {
         return Category.create(
                 faker.lorem().characters(7),

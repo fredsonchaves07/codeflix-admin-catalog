@@ -4,11 +4,11 @@ import codeflixadmincatalog.core.entities.Entity;
 
 public final class Category extends Entity<CategoryID> {
 
-    private final String name;
+    private String name;
 
     private String description;
 
-    private final boolean isActive;
+    private boolean isActive;
 
     private Category(CategoryID categoryID, String name, String description, boolean isActive) {
         super(categoryID);
@@ -48,11 +48,31 @@ public final class Category extends Entity<CategoryID> {
         return name;
     }
 
+    public void name(String name) {
+        this.name = name;
+        super.update();
+    }
+
     public String description() {
         return description;
     }
 
+    public void description(String description) {
+        this.description = description;
+        super.update();
+    }
+
     public boolean isActive() {
         return isActive;
+    }
+
+    public void deactivate() {
+        this.isActive = false;
+        super.update();
+    }
+
+    public void activate() {
+        this.isActive = true;
+        super.update();
     }
 }

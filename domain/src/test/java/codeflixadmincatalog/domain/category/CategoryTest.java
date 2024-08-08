@@ -4,7 +4,9 @@ import codeflixadmincatalog.core.errors.DomainError;
 import codeflixadmincatalog.domain.category.entity.Category;
 import org.junit.jupiter.api.Test;
 
-import static codeflixadmincatalog.factories.utils.MakeCategory.makeCategory;
+import java.time.LocalDateTime;
+
+import static codeflixadmincatalog.factories.utils.MakeCategory.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CategoryTest {
@@ -67,5 +69,89 @@ public class CategoryTest {
                 () -> Category.create(name, category.description(), category.isActive())
         );
         assertEquals(expectedErrorMessage, domainError.getMessage());
+    }
+
+    @Test
+    public void shouldCreateANewCategoryWithEmptyDescription() {
+        final Category category = makeCategoryWithEmptyDescription();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        assertNotNull(newCategory);
+        assertNotNull(newCategory.id());
+        assertEquals(category.name(), newCategory.name());
+        assertEquals(category.description(), newCategory.description());
+        assertEquals(category.isActive(), newCategory.isActive());
+        assertNotNull(newCategory.createdAt());
+        assertNotNull(newCategory.updatedAt());
+        assertNull(newCategory.deletedAt());
+    }
+
+    @Test
+    public void shouldCreateANewCategoryWithInactive() {
+        final Category category = makeCategoryWithInactive();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        assertNotNull(newCategory);
+        assertNotNull(newCategory.id());
+        assertEquals(category.name(), newCategory.name());
+        assertEquals(category.description(), newCategory.description());
+        assertEquals(category.isActive(), newCategory.isActive());
+        assertNotNull(newCategory.createdAt());
+        assertNotNull(newCategory.updatedAt());
+        assertNull(newCategory.deletedAt());
+    }
+
+    @Test
+    public void shouldInactivatedCategoryIfDeactivateCategory() {
+        final Category category = makeCategory();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
+        newCategory.deactivate();
+        assertFalse(newCategory.isActive());
+        assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
+    }
+
+    @Test
+    public void shouldActivatedCategoryIfActeivatedCategory() {
+        final Category category = makeCategoryWithInactive();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
+        newCategory.activate();
+        assertTrue(newCategory.isActive());
+        assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
+    }
+
+    @Test
+    public void shouldUpdateACategoryName() {
+        final Category category = makeCategoryWithInactive();
+        final String name = "Filme";
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
+        newCategory.name(name);
+        assertEquals(name, newCategory.name());
+        assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
+    }
+
+    @Test
+    public void shouldUpdateACategoryDescription() {
+        final Category category = makeCategoryWithInactive();
+        final String description = "Filme mais assistido";
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
+        newCategory.description(description);
+        assertEquals(description, newCategory.description());
+        assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
+    }
+
+    @Test
+    public void shouldUpdateACategory() {
+        final Category category = makeCategoryWithInactive();
+        final String name = "Filme";
+        final String description = "Filme mais assistido";
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
+        newCategory.name(name);
+        newCategory.description(name);
+        assertEquals(name, newCategory.name());
+        assertEquals(name, newCategory.description());
+        assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
     }
 }
