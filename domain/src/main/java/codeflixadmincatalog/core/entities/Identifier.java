@@ -32,4 +32,8 @@ public abstract class Identifier {
     public int hashCode() {
         return Objects.hashCode(value);
     }
+
+    public static<E extends Entity<Identifier>> Identifier valueOf(E entity) {
+        return entity.id();
+    }
 }
