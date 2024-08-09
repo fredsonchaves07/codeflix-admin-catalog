@@ -1,7 +1,7 @@
 package codeflixadmincatalog.domain.repositories.category;
 
 import codeflixadmincatalog.domain.entities.category.Category;
-import codeflixadmincatalog.factories.db.repositories.InMemoryCategoryRepository;
+import codeflixadmincatalog.factories.db.repositories.category.InMemoryCategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
