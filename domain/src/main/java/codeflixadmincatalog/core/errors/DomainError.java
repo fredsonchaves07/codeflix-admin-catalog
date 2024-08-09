@@ -1,12 +1,13 @@
 package codeflixadmincatalog.core.errors;
 
-public class DomainError extends Error {
+public abstract class DomainError extends Error {
 
-    private DomainError(String message) {
+    protected DomainError(String message) {
         super(message);
+        typeError = TypeError.DOMAIN_ERROR;
     }
 
-    public static DomainError trows(String message) {
-        return new DomainError(message);
+    protected DomainError(Exception exception) {
+        super(exception.getMessage());
     }
 }
