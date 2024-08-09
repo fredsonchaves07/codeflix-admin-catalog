@@ -1,6 +1,6 @@
 package codeflixadmincatalog.domain.entities.category;
 
-import codeflixadmincatalog.core.errors.DomainError;
+import codeflixadmincatalog.domain.errors.category.CategoryError;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -28,33 +28,36 @@ public class CategoryEntityTest {
     public void shouldNotCreateANewCategoryWithInvalidNullName() {
         final Category category = makeCategory();
         final String expectedErrorMessage = "Category name cannot be null";
-        final DomainError domainError = assertThrows(
-                DomainError.class,
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
                 () -> Category.create(null, category.description(), category.isActive())
         );
-        assertEquals(expectedErrorMessage, domainError.getMessage());
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
     }
 
     @Test
     public void shouldNotCreateANewCategoryWithEmptyNullName() {
         final Category category = makeCategory();
         final String expectedErrorMessage = "Category name cannot be empty";
-        final DomainError domainError = assertThrows(
-                DomainError.class,
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
                 () -> Category.create("", category.description(), category.isActive())
         );
-        assertEquals(expectedErrorMessage, domainError.getMessage());
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
     }
 
     @Test
     public void shouldNotCreateANewCategoryWithLengthNameLessThan3Characters() {
         final Category category = makeCategory();
         final String expectedErrorMessage = "Category name must be between 3 to 50 characters";
-        final DomainError domainError = assertThrows(
-                DomainError.class,
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
                 () -> Category.create("ca", category.description(), category.isActive())
         );
-        assertEquals(expectedErrorMessage, domainError.getMessage());
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
     }
 
     @Test
@@ -63,11 +66,12 @@ public class CategoryEntityTest {
                 "para ilustrar a geração de strings extensas.";
         final Category category = makeCategory();
         final String expectedErrorMessage = "Category name must be between 3 to 50 characters";
-        final DomainError domainError = assertThrows(
-                DomainError.class,
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
                 () -> Category.create(name, category.description(), category.isActive())
         );
-        assertEquals(expectedErrorMessage, domainError.getMessage());
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
     }
 
     @Test
@@ -109,7 +113,7 @@ public class CategoryEntityTest {
     }
 
     @Test
-    public void shouldActivatedCategoryIfActeivatedCategory() {
+    public void shouldActivatedCategoryIfActivatedCategory() {
         final Category category = makeCategoryWithInactive();
         final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
         LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
@@ -120,13 +124,67 @@ public class CategoryEntityTest {
 
     @Test
     public void shouldUpdateACategoryName() {
-        final Category category = makeCategoryWithInactive();
+        final Category category = makeCategory();
         final String name = "Filme";
         final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
         LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
         newCategory.name(name);
         assertEquals(name, newCategory.name());
         assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
+    }
+
+    @Test
+    public void shouldNotUpdateACategoryWithInvalidNullName() {
+        final Category category = makeCategory();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        final String expectedErrorMessage = "Category name cannot be null";
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
+                () -> newCategory.name(null)
+        );
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
+    }
+
+    @Test
+    public void shouldNotUpdateACategoryWithIEmptyNullName() {
+        final Category category = makeCategory();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        final String expectedErrorMessage =  "Category name cannot be empty";
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
+                () -> newCategory.name("")
+        );
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
+    }
+
+    @Test
+    public void shouldNotUpdateACategoryWithLengthNameLessThan3Characters() {
+        final Category category = makeCategory();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        final String expectedErrorMessage = "Category name must be between 3 to 50 characters";
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
+                () -> newCategory.name("ca")
+        );
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
+    }
+
+    @Test
+    public void shouldNotUpdateACategoryWithLengthNameMoreThan50Characters() {
+        final String name = "Este é um exemplo de uma string longa com mais de 50 caracteres em Java, " +
+                "para ilustrar a geração de strings extensas.";
+        final Category category = makeCategory();
+        final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
+        final String expectedErrorMessage = "Category name must be between 3 to 50 characters";
+        final CategoryError categoryError = assertThrows(
+                CategoryError.class,
+                () -> newCategory.name(name)
+        );
+        assertTrue(categoryError.isDomainError());
+        assertEquals(expectedErrorMessage, categoryError.getMessage());
     }
 
     @Test
@@ -148,9 +206,9 @@ public class CategoryEntityTest {
         final Category newCategory = Category.create(category.name(), category.description(), category.isActive());
         LocalDateTime newCategoryUpdatedAt = newCategory.updatedAt();
         newCategory.name(name);
-        newCategory.description(name);
+        newCategory.description(description);
         assertEquals(name, newCategory.name());
-        assertEquals(name, newCategory.description());
+        assertEquals(description, newCategory.description());
         assertNotEquals(newCategoryUpdatedAt, newCategory.updatedAt());
     }
 }
