@@ -50,7 +50,7 @@ public final class Category extends Entity<CategoryID> {
 
     public void name(String name) {
         this.name = name;
-        super.update();
+        this.updateCategory();
     }
 
     public String description() {
@@ -59,7 +59,7 @@ public final class Category extends Entity<CategoryID> {
 
     public void description(String description) {
         this.description = description;
-        super.update();
+        this.updateCategory();
     }
 
     public boolean isActive() {
@@ -68,11 +68,16 @@ public final class Category extends Entity<CategoryID> {
 
     public void deactivate() {
         this.isActive = false;
-        super.update();
+        this.updateCategory();
     }
 
     public void activate() {
         this.isActive = true;
+        this.updateCategory();
+    }
+
+    private void updateCategory() {
+        new CategoryValidator(this).validate();
         super.update();
     }
 }
