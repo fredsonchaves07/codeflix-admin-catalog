@@ -11,7 +11,7 @@
 
     <modules>
         <module>domain</module>
-        <module>app</module>
+        <module>api</module>
     </modules>
 
     <properties>
