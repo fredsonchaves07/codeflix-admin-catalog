@@ -16,7 +16,9 @@ public interface Repository<I extends Identifier, E extends Entity<I>> {
 
     void delete(E entity);
 
-    default int count() {
+    void deleteAll();
+
+    default long count() {
         return findAll().size();
     }
 }
