@@ -1,28 +1,32 @@
-package codeflixadmincatalog.domain.repositories.category;
+package github.fredsonchaves07.codeflix.admin.catalog.category.database.jpa;
 
 import codeflixadmincatalog.domain.entities.category.Category;
 import codeflixadmincatalog.domain.entities.category.CategoryID;
-import codeflixadmincatalog.factories.db.repositories.category.InMemoryCategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
+import codeflixadmincatalog.domain.repositories.category.CategoryRepository;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static codeflixadmincatalog.factories.entities.MakeCategory.makeCategory;
-import static codeflixadmincatalog.factories.entities.MakeCategory.makeCategoryWithInactive;
+import static github.fredsonchaves07.codeflix.admin.catalog.factories.entities.MakeCategory.makeCategory;
+import static github.fredsonchaves07.codeflix.admin.catalog.factories.entities.MakeCategory.makeCategoryWithInactive;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CategoryRepositoryTest {
+@QuarkusTest
+public class CategoryJpaTest {
 
+    @Inject
     CategoryRepository repository;
 
-    @BeforeEach
-    void setUp() {
-        repository = InMemoryCategoryRepository.createRepository();
+    @AfterEach
+    public void setUp() {
+        repository.deleteAll();
     }
 
     @Test
-    public void shouldCreateCategory() {
+    public void shouldCreateACategory() {
         Category category = makeCategory();
         assertDoesNotThrow(() -> repository.save(category));
         assertEquals(Long.valueOf(1), repository.count());
