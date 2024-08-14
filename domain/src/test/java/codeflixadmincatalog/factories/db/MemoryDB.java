@@ -28,7 +28,7 @@ public class MemoryDB<E> implements DB<E> {
 
     @Override
     public Optional<E> findById(String id) {
-        return Optional.of(data.get(id));
+        return Optional.ofNullable(data.get(id));
     }
 
     @Override
