@@ -32,4 +32,9 @@ public class FailingCategoryRepository implements CategoryRepository {
     public void delete(Category entity) {
         throw new RuntimeException("An error occurred while running the repository");
     }
+
+    @Override
+    public void deleteAll() {
+        throw new RuntimeException("An error occurred while running the repository");
+    }
 }

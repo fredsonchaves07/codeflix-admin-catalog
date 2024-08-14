@@ -41,4 +41,10 @@ public class InMemoryCategoryRepository implements CategoryRepository {
     public void delete(Category entity) {
         db.delete(entity.id().toString());
     }
+
+    @Override
+    public void deleteAll() {
+        for (Category category : findAll())
+            db.delete(category.id().toString());
+    }
 }
