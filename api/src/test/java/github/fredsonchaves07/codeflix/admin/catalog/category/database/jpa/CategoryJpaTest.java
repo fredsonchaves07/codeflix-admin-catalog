@@ -21,7 +21,7 @@ public class CategoryJpaTest {
     CategoryRepository repository;
 
     @AfterEach
-    public void setUp() {
+    void tearDown() {
         repository.deleteAll();
     }
 

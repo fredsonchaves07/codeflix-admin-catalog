@@ -1,7 +1,6 @@
 package codeflixadmincatalog.domain.usecases.category;
 
 import codeflixadmincatalog.core.either.Either;
-import codeflixadmincatalog.core.errors.TypeError;
 import codeflixadmincatalog.core.valueobject.EmptyValueObject;
 import codeflixadmincatalog.domain.entities.category.Category;
 import codeflixadmincatalog.domain.errors.category.CategoryError;
